@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Обратная связь — Раджабов Шахром</title>
+  <meta name="description" content="Связаться со студентом-медиком Раджабовым Шахромом.">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -14,7 +15,9 @@
         <div class="logo-icon">⚕</div>
         <span>Шахром Раджабов</span>
       </a>
+
       <button class="burger" id="burger" aria-label="Меню">☰</button>
+
       <nav class="nav" id="nav">
         <a href="index.html">О себе</a>
         <a href="materials.html">Материалы</a>
@@ -27,27 +30,35 @@
   <section class="section">
     <div class="container">
       <h2 class="section-title">Обратная связь</h2>
-      <p style="margin-bottom: 26px; color: var(--text-light); max-width: 520px;">
-        Есть вопросы по материалам или предложения? Напишите — постараюсь ответить.
+
+      <p style="margin-bottom: 28px; color: var(--text-light); max-width: 600px;">
+        Есть вопросы по материалам, предложения или просто хотите связаться? 
+        Напишите мне — постараюсь ответить как можно скорее.
       </p>
+
       <form class="contact-form" id="contactForm" onsubmit="return handleSubmit(event)">
         <div class="form-group">
           <label for="name">Ваше имя</label>
           <input type="text" id="name" name="name" required placeholder="Как к вам обращаться">
         </div>
+
         <div class="form-group">
           <label for="email">Email</label>
           <input type="email" id="email" name="email" required placeholder="your@email.com">
         </div>
+
         <div class="form-group">
           <label for="message">Сообщение</label>
-          <textarea id="message" name="message" required placeholder="Ваш вопрос или предложение..."></textarea>
+          <textarea id="message" name="message" required placeholder="Напишите ваш вопрос или предложение..."></textarea>
         </div>
-        <button type="submit" class="btn">Отправить</button>
+
+        <button type="submit" class="btn">Отправить сообщение</button>
       </form>
-      <p style="margin-top: 20px; font-size: 0.88rem; color: var(--text-light);">
-        Форма сейчас в демо-режиме. Для реальной работы можно подключить Formspree или Netlify Forms.
-      </p>
+
+      <div class="contact-info">
+        <p><strong>Примечание:</strong> форма пока работает в демонстрационном режиме. 
+        Для реальной работы нужно подключить сервис (например, Formspree, Netlify Forms или свой backend).</p>
+      </div>
     </div>
   </section>
 
@@ -56,12 +67,13 @@
       <p>© 2025–2026 Раджабов Шахром. Студент-медик.</p>
     </div>
   </footer>
+
   <script src="js/main.js"></script>
   <script>
     function handleSubmit(e) {
       e.preventDefault();
       const name = document.getElementById('name').value;
-      alert('Спасибо, ' + name + '! Сообщение принято (демо-режим).');
+      alert('Спасибо, ' + name + '! Сообщение принято (демо-режим).\n\nВ реальном сайте оно уйдёт на email.');
       document.getElementById('contactForm').reset();
       return false;
     }
