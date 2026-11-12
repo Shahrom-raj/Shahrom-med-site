@@ -826,7 +826,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initAIChat() {
-  // Remove existing if any
   const oldBtn = document.getElementById('aiChatBtn');
   const oldPanel = document.getElementById('aiChatPanel');
   if (oldBtn) oldBtn.remove();
@@ -847,17 +846,21 @@ function initAIChat() {
       <span>🤖 ИИ-помощник</span>
       <button id="aiChatClose" aria-label="Закрыть">✕</button>
     </div>
-    <div class="ai-chat-body">
-      <iframe 
-        src="https://free.ai/embed/chat/" 
-        title="AI Chat"
-        allow="clipboard-write"
-        loading="lazy">
-      </iframe>
+    <div class="ai-chat-body" style="padding:16px;overflow-y:auto;background:#f0f7f7;">
+      <p style="margin:0 0 12px;font-weight:600;color:#0a2e36;">Помощник по сайту</p>
+      <p style="font-size:0.92rem;color:#5a6f78;margin-bottom:14px;">
+        Перейдите в раздел <b>«Материалы»</b> — там можно искать по 182 вопросам и читать полные ответы.
+      </p>
+      <a href="materials.html" style="display:block;text-align:center;padding:12px;background:linear-gradient(135deg,#0d7377,#14a3a8);color:white;border-radius:10px;font-weight:700;text-decoration:none;margin-bottom:12px;">
+        Открыть Материалы
+      </a>
+      <a href="https://chatgpt.com/" target="_blank" rel="noopener"
+        style="display:block;text-align:center;padding:10px;background:#10a37f;color:white;border-radius:8px;font-weight:600;text-decoration:none;">
+        Открыть ChatGPT
+      </a>
     </div>
     <div class="ai-chat-disclaimer">
-      Общий ИИ-помощник. Не заменяет учебники и врача.<br>
-      Для точных ответов по экзамену — откройте материалы сайта.
+      Для точных ответов по экзамену используйте раздел Материалы.
     </div>
   `;
   document.body.appendChild(panel);
@@ -875,43 +878,6 @@ function initAIChat() {
     btn.classList.remove('open');
     btn.innerHTML = '🤖';
   });
-}
-
-// PDF Viewer
-function openPdfViewer(pdfUrl) {
-  let modal = document.getElementById('pdfModal');
-  if (!modal) {
-    modal = document.createElement('div');
-    modal.id = 'pdfModal';
-    modal.className = 'pdf-modal';
-    modal.innerHTML = `
-      <div class="pdf-modal-inner">
-        <div class="pdf-modal-header">
-          <span>Детская хирургия — вопросы 1–182</span>
-          <button id="pdfModalClose" aria-label="Закрыть">✕</button>
-        </div>
-        <div class="pdf-modal-body">
-          <iframe id="pdfFrame" src="" title="PDF Viewer"></iframe>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(modal);
-
-    document.getElementById('pdfModalClose').addEventListener('click', () => {
-      modal.classList.remove('open');
-      document.getElementById('pdfFrame').src = '';
-    });
-
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.classList.remove('open');
-        document.getElementById('pdfFrame').src = '';
-      }
-    });
-  }
-
-  document.getElementById('pdfFrame').src = pdfUrl + '#toolbar=1&navpanes=0';
-  modal.classList.add('open');
 }
 
 </script>
