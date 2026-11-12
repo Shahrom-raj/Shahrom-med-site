@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Экзамен — Shahrom Rajabov</title>
+  <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #f0f7f7;
+  --bg-card: #ffffff;
+  --text: #0f2c32;
+  --text-muted: #5a7178;
+  --primary: #0d7377;
+  --primary-hover: #0a5c5f;
+  --accent: #14b8a6;
+  --border: #d0e5e5;
+  --header-bg: rgba(255,255,255,0.9);
+  --shadow: 0 4px 24px rgba(13,115,119,0.08);
+  --radius: 14px;
+  --danger: #e11d48;
+}
+
+[data-theme="dark"] {
+  --bg: #0b1a1d;
+  --bg-card: #122529;
+  --text: #e6f2f2;
+  --text-muted: #8aa3a8;
+  --primary: #2dd4bf;
+  --primary-hover: #5eead4;
+  --accent: #14b8a6;
+  --border: #1e3a3f;
+  --header-bg: rgba(11,26,29,0.92);
+  --shadow: 0 4px 24px rgba(0,0,0,0.35);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.25s, color 0.25s;
+}
+a { text-decoration: none; color: inherit; transition: 0.2s; }
+.container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+/* Header */
+.header {
+  background: var(--header-bg);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  gap: 12px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+.logo-icon {
+  width: 42px; height: 42px;
+  background: linear-gradient(145deg, var(--primary), var(--accent));
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 1.3rem;
+  box-shadow: 0 4px 14px rgba(13,115,119,0.3);
+}
+.nav { display: flex; gap: 4px; flex-wrap: wrap; }
+.nav a {
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+.nav a:hover, .nav a.active {
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  color: var(--primary);
+}
+.header-actions { display: flex; align-items: center; gap: 8px; }
+.icon-btn {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  transition: 0.2s;
+}
+.icon-btn:hover { border-color: var(--primary); color: var(--primary); }
+.lang-btn {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.lang-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+.burger { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); }
+
+/* Hero */
+.hero {
+  background: linear-gradient(145deg, #0a2e36 0%, #0d7377 50%, #14b8a6 100%);
+  color: white;
+  padding: 64px 0 56px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.03em; }
+.hero .subtitle { font-size: 1.15rem; opacity: 0.95; font-weight: 500; }
+.hero .tagline { font-size: 0.98rem; opacity: 0.8; max-width: 460px; margin: 12px auto 0; }
+
+/* Sections */
+.section { padding: 48px 0; }
+.section-title {
+  font-size: 1.7rem; font-weight: 800; color: var(--text);
+  margin-bottom: 24px; letter-spacing: -0.02em;
+  position: relative; padding-bottom: 10px;
+}
+.section-title::after {
+  content: ''; position: absolute; left: 0; bottom: 0;
+  width: 44px; height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 4px;
+}
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 24px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  height: 100%;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(13,115,119,0.12); }
+.card h3 { color: var(--primary); margin-bottom: 8px; font-size: 1.15rem; font-weight: 700; }
+.card p { color: var(--text-muted); font-size: 0.93rem; }
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+
+/* About */
+.about-content { display: grid; grid-template-columns: 1fr 1.5fr; gap: 36px; align-items: start; }
+.about-photo {
+  background: linear-gradient(145deg, color-mix(in srgb, var(--primary) 20%, var(--bg)), color-mix(in srgb, var(--accent) 25%, var(--bg)));
+  border-radius: var(--radius); aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 5rem; border: 2px solid var(--border);
+}
+.about-text p { margin-bottom: 12px; color: var(--text-muted); }
+.about-text strong { color: var(--text); }
+.info-list { list-style: none; margin-top: 18px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border); overflow: hidden; }
+.info-list li { padding: 11px 16px; border-bottom: 1px solid var(--border); display: flex; gap: 12px; }
+.info-list li:last-child { border-bottom: none; }
+.info-list .label { font-weight: 700; color: var(--primary); min-width: 90px; font-size: 0.88rem; }
+
+/* Material hero + book viewer */
+.material-hero {
+  background: linear-gradient(145deg, #0a2e36, #0d7377 60%, #14b8a6);
+  color: white; padding: 28px; border-radius: var(--radius); margin-bottom: 24px;
+}
+.material-hero h3 { color: white; font-size: 1.35rem; font-weight: 800; margin-bottom: 8px; }
+.material-hero p { opacity: 0.92; margin-bottom: 18px; max-width: 520px; }
+.btn-read, .btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: white; color: #0a2e36;
+  padding: 12px 22px; border-radius: 999px;
+  font-weight: 700; font-size: 0.95rem; border: none; cursor: pointer;
+  transition: 0.2s; font-family: inherit;
+}
+.btn-read:hover, .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+}
+
+/* Embedded book section */
+.book-viewer {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow);
+}
+.book-viewer-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; background: var(--bg);
+  border-bottom: 1px solid var(--border); font-weight: 700;
+}
+.book-frame {
+  width: 100%; height: 70vh; min-height: 420px; border: none;
+  background: #e8eef0;
+}
+
+/* Search & questions */
+.search-box { margin-bottom: 16px; }
+.search-box input {
+  width: 100%; max-width: 480px; padding: 12px 16px;
+  border: 1.5px solid var(--border); border-radius: 999px;
+  font-size: 1rem; background: var(--bg-card); color: var(--text);
+  font-family: inherit; transition: 0.2s;
+}
+.search-box input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent); }
+.stats { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; font-size: 0.88rem; color: var(--text-muted); }
+.stats strong { color: var(--primary); }
+
+.q-list { list-style: none; }
+.q-item {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; margin-bottom: 8px; overflow: hidden; transition: 0.15s;
+}
+.q-item:hover { box-shadow: var(--shadow); }
+.q-header {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 13px 15px; cursor: pointer; user-select: none;
+}
+.q-num {
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  color: var(--primary); font-weight: 800; font-size: 0.78rem;
+  min-width: 32px; height: 26px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.q-title { flex: 1; font-weight: 600; font-size: 0.94rem; line-height: 1.4; }
+.q-toggle { color: var(--text-muted); font-size: 0.85rem; transition: 0.2s; }
+.q-item.open .q-toggle { transform: rotate(180deg); }
+.q-body {
+  display: none; padding: 12px 16px 16px;
+  border-top: 1px solid var(--border);
+  max-height: 65vh; overflow-y: auto;
+  font-size: 0.92rem; line-height: 1.55; background: color-mix(in srgb, var(--primary) 4%, var(--bg));
+}
+.q-item.open .q-body { display: block; }
+.q-body p { margin-bottom: 8px; }
+.q-body h4 { margin: 12px 0 6px; color: var(--primary); }
+
+.note {
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  border-left: 4px solid var(--primary);
+  padding: 12px 16px; border-radius: 0 10px 10px 0;
+  margin-bottom: 18px; font-size: 0.9rem; color: var(--text-muted);
+}
+
+.item-card { display: flex; gap: 14px; align-items: flex-start; }
+.item-icon {
+  width: 48px; height: 48px;
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; flex-shrink: 0;
+}
+.badge {
+  display: inline-block;
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  color: var(--primary); font-size: 0.72rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 20px; margin-top: 6px;
+}
+
+/* Contact */
+.contact-form {
+  background: var(--bg-card); padding: 28px; border-radius: var(--radius);
+  border: 1px solid var(--border); box-shadow: var(--shadow); max-width: 520px;
+}
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 0.9rem; }
+.form-group input, .form-group textarea {
+  width: 100%; padding: 11px 14px; border: 1.5px solid var(--border);
+  border-radius: 10px; font-size: 1rem; font-family: inherit;
+  background: var(--bg); color: var(--text); transition: 0.2s;
+}
+.form-group input:focus, .form-group textarea:focus {
+  outline: none; border-color: var(--primary);
+}
+.form-group textarea { min-height: 120px; resize: vertical; }
+
+/* Footer */
+.footer {
+  background: #0a2e36; color: rgba(255,255,255,0.8);
+  padding: 24px 0; margin-top: auto; text-align: center; font-size: 0.88rem;
+}
+
+/* AI Widget */
+.ai-chat-btn {
+  position: fixed; bottom: 22px; right: 22px;
+  width: 60px; height: 60px; border-radius: 50%;
+  background: linear-gradient(145deg, var(--primary), var(--accent));
+  color: white; border: none;
+  box-shadow: 0 8px 28px rgba(13,115,119,0.4);
+  cursor: pointer; z-index: 1500;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.7rem; transition: 0.2s;
+}
+.ai-chat-btn:hover { transform: scale(1.08); }
+.ai-chat-btn.open { background: #64748b; }
+.ai-chat-panel {
+  position: fixed; bottom: 94px; right: 22px;
+  width: 380px; max-width: calc(100vw - 24px);
+  height: 520px; max-height: calc(100vh - 120px);
+  background: var(--bg-card); border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.2);
+  z-index: 1499; display: none; flex-direction: column;
+  overflow: hidden; border: 1px solid var(--border);
+}
+.ai-chat-panel.open { display: flex; }
+.ai-chat-header {
+  background: linear-gradient(145deg, #0a2e36, var(--primary));
+  color: white; padding: 13px 15px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-weight: 700;
+}
+.ai-chat-header button {
+  background: rgba(255,255,255,0.18); border: none; color: white;
+  width: 32px; height: 32px; border-radius: 8px; cursor: pointer; font-size: 1.1rem;
+}
+.ai-chat-body { flex: 1; overflow-y: auto; padding: 14px; background: var(--bg); }
+.ai-chat-disclaimer {
+  padding: 8px 12px; font-size: 0.7rem; color: var(--text-muted);
+  background: var(--bg-card); border-top: 1px solid var(--border); text-align: center;
+}
+
+/* PDF Modal */
+.pdf-modal {
+  display: none; position: fixed; inset: 0;
+  background: rgba(10,46,54,0.8); z-index: 2000;
+  align-items: center; justify-content: center; padding: 12px;
+  backdrop-filter: blur(6px);
+}
+.pdf-modal.open { display: flex; }
+.pdf-modal-inner {
+  background: var(--bg-card); width: 100%; max-width: 980px;
+  height: 92vh; border-radius: 14px; overflow: hidden;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+}
+.pdf-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 11px 16px; background: #0a2e36; color: white; font-weight: 700;
+}
+.pdf-modal-header button {
+  background: rgba(255,255,255,0.15); border: none; color: white;
+  width: 34px; height: 34px; border-radius: 8px; cursor: pointer; font-size: 1.15rem;
+}
+.pdf-modal-body { flex: 1; background: #e8eef0; }
+.pdf-modal-body iframe { width: 100%; height: 100%; border: none; }
+
+@media (max-width: 768px) {
+  .burger { display: block; }
+  .nav {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--bg-card); flex-direction: column; padding: 12px;
+    box-shadow: var(--shadow); border-top: 1px solid var(--border);
+  }
+  .nav.open { display: flex; }
+  .nav a { padding: 12px 14px; border-radius: 10px; }
+  .hero h1 { font-size: 1.85rem; }
+  .about-content { grid-template-columns: 1fr; }
+  .about-photo { max-width: 180px; margin: 0 auto; }
+  .ai-chat-panel { right: 10px; left: 10px; width: auto; bottom: 88px; }
+  .ai-chat-btn { right: 14px; bottom: 14px; }
+  .book-frame { height: 55vh; }
+}
+
+  .exam-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+  .exam-tab {
+    padding:10px 18px; border-radius:999px; border:1.5px solid var(--border);
+    background:var(--bg-card); color:var(--text); font-weight:600; cursor:pointer; font-size:0.9rem;
+  }
+  .exam-tab.active { background:var(--primary); color:white; border-color:var(--primary); }
+  .exam-panel { display:none; }
+  .exam-panel.active { display:block; }
+  .mcq-card, .open-card {
+    background:var(--bg-card); border:1px solid var(--border); border-radius:14px;
+    padding:18px; margin-bottom:14px;
+  }
+  .mcq-card h4, .open-card h4 { margin-bottom:12px; font-size:1rem; }
+  .opt {
+    display:block; padding:10px 14px; margin:6px 0; border-radius:10px;
+    border:1.5px solid var(--border); cursor:pointer; transition:0.15s;
+  }
+  .opt:hover { border-color:var(--primary); }
+  .opt.selected { border-color:var(--primary); background:color-mix(in srgb, var(--primary) 12%, transparent); }
+  .opt.correct { border-color:#16a34a; background:rgba(22,163,74,0.12); }
+  .opt.wrong { border-color:#e11d48; background:rgba(225,29,72,0.1); }
+  .score-box {
+    background:linear-gradient(145deg,#0a2e36,#0d7377); color:white;
+    padding:20px; border-radius:14px; text-align:center; margin:18px 0;
+  }
+  .score-box .big { font-size:2.4rem; font-weight:800; }
+  textarea.answer {
+    width:100%; min-height:100px; padding:12px; border-radius:10px;
+    border:1.5px solid var(--border); background:var(--bg); color:var(--text);
+    font-family:inherit; font-size:0.95rem; resize:vertical;
+  }
+  .progress { height:8px; background:var(--border); border-radius:4px; margin:12px 0 20px; overflow:hidden; }
+  .progress > div { height:100%; background:linear-gradient(90deg,var(--primary),var(--accent)); transition:0.3s; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo"><div class="logo-icon">⚕</div><span>Shahrom Rajabov</span></a>
+      <button class="burger" id="burger">☰</button>
+      <nav class="nav" id="nav">
+        <a href="index.html">О себе</a>
+        <a href="materials.html">Материалы</a>
+        <a href="exam.html" class="active">Экзамен</a>
+        <a href="books.html">Книги</a>
+        <a href="contact.html">Обратная связь</a>
+      </nav>
+      <div class="header-actions">
+        <button class="lang-btn active" data-lang="ru">RU</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="icon-btn" id="themeBtn">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Экзамен и тесты</h2>
+      <div class="note">
+        Тесты и закрытые вопросы по детской хирургии (на основе 183 вопросов).
+        Общий экзамен: <b>4 случайных вопроса × 25 баллов = 100 баллов</b>.
+        Открытые ответы проверяются автоматически — частичное совпадение тоже даёт баллы.
+      </div>
+
+      <div class="exam-tabs">
+        <button class="exam-tab active" data-tab="mcq">Тесты (выбор)</button>
+        <button class="exam-tab" data-tab="open">Закрытые вопросы</button>
+        <button class="exam-tab" data-tab="exam">Общий экзамен (100)</button>
+      </div>
+
+      <div class="exam-panel active" id="panel-mcq">
+        <p style="color:var(--text-muted);margin-bottom:14px;">Выберите ответы и нажмите «Проверить».</p>
+        <div id="mcqList"></div>
+        <button class="btn btn-primary" id="checkMcq">Проверить тесты</button>
+        <div id="mcqResult"></div>
+      </div>
+
+      <div class="exam-panel" id="panel-open">
+        <p style="color:var(--text-muted);margin-bottom:14px;">Напишите ответ своими словами. Система сравнит с материалом.</p>
+        <div id="openList"></div>
+        <button class="btn btn-primary" id="checkOpen">Проверить ответы</button>
+        <div id="openResult"></div>
+      </div>
+
+      <div class="exam-panel" id="panel-exam">
+        <p style="color:var(--text-muted);margin-bottom:10px;">4 случайных вопроса. Каждый до 25 баллов. Итого 100.</p>
+        <button class="btn btn-primary" id="startExam">Начать новый экзамен</button>
+        <div class="progress" id="examProgress" style="display:none"><div style="width:0%"></div></div>
+        <div id="examArea"></div>
+        <div id="examResult"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer"><div class="container"><p>© 2025–2026 Shahrom Rajabov</p></div></footer>
+  <script>// Theme + Language + AI + PDF
+const i18n = {
+  ru: {
+    about: "О себе", materials: "Материалы", books: "Книги", contact: "Обратная связь",
+    heroTitle: "Раджабов Шахром", heroSub: "Студент • Будущий врач",
+    heroTag: "Путь в медицину начинается с знаний, дисциплины и желания помогать людям",
+    aboutTitle: "О себе",
+    aboutP1: "Здравствуйте! Меня зовут Раджабов Шахром. Я студент медицинского университета, который стремится стать квалифицированным и внимательным врачом.",
+    aboutP2: "Медицина для меня — это не просто профессия, а призвание. Я верю, что хороший врач должен сочетать глубокие знания, эмпатию и постоянное стремление к развитию.",
+    status: "Статус", statusVal: "Студент медицинского вуза",
+    goal: "Цель", goalVal: "Стать практикующим врачом",
+    interests: "Интересы", interestsVal: "Клиническая медицина, анатомия, терапия",
+    matTitle: "Материалы для экзамена",
+    matHero: "Детская хирургия — вопросы 1–182",
+    matDesc: "Основной учебный материал. Читайте учебник прямо на сайте и ищите ответы по вопросам.",
+    openBook: "Открыть учебник",
+    searchPh: "Поиск по вопросам (атрезия, травма, пилоростеноз...)",
+    totalQ: "Всего вопросов",
+    booksTitle: "Рекомендуемые книги",
+    contactTitle: "Обратная связь",
+    send: "Отправить",
+    aiTitle: "ИИ-помощник",
+    aiLocal: "Поиск по материалам сайта",
+    aiWeb: "Спросить общий медицинский ИИ",
+    aiHint: "Введите тему или вопрос — найду в материалах. Для других медицинских вопросов откройте ChatGPT / Perplexity."
+  },
+  en: {
+    about: "About", materials: "Materials", books: "Books", contact: "Contact",
+    heroTitle: "Shahrom Rajabov", heroSub: "Student • Future Doctor",
+    heroTag: "The path to medicine begins with knowledge, discipline and the desire to help people",
+    aboutTitle: "About me",
+    aboutP1: "Hello! My name is Shahrom Rajabov. I am a medical university student who strives to become a qualified and attentive doctor.",
+    aboutP2: "Medicine for me is not just a profession, but a calling. I believe a good doctor must combine deep knowledge, empathy and continuous development.",
+    status: "Status", statusVal: "Medical university student",
+    goal: "Goal", goalVal: "Become a practicing physician",
+    interests: "Interests", interestsVal: "Clinical medicine, anatomy, therapy",
+    matTitle: "Exam materials",
+    matHero: "Pediatric Surgery — questions 1–182",
+    matDesc: "Main study material. Read the textbook on the site and search answers by question.",
+    openBook: "Open textbook",
+    searchPh: "Search questions (atresia, trauma, pyloric stenosis...)",
+    totalQ: "Total questions",
+    booksTitle: "Recommended books",
+    contactTitle: "Feedback",
+    send: "Send",
+    aiTitle: "AI Assistant",
+    aiLocal: "Search site materials",
+    aiWeb: "Ask general medical AI",
+    aiHint: "Enter a topic — I will search the materials. For other medical questions open ChatGPT / Perplexity."
+  }
+};
+
+let currentLang = localStorage.getItem('lang') || 'ru';
+let currentTheme = localStorage.getItem('theme') || 'light';
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  applyLang(currentLang);
+  initBurger();
+  initThemeBtn();
+  initLangBtn();
+  initAIChat();
+  initPdfButtons();
+});
+
+function applyLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (i18n[lang][key]) el.textContent = i18n[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (i18n[lang][key]) el.placeholder = i18n[lang][key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+}
+
+function initThemeBtn() {
+  const btn = document.getElementById('themeBtn');
+  if (!btn) return;
+  btn.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+  btn.addEventListener('click', () => {
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', currentTheme);
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    btn.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+  });
+}
+
+function initLangBtn() {
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+  });
+}
+
+function initBurger() {
+  const burger = document.getElementById('burger');
+  const nav = document.getElementById('nav');
+  if (!burger || !nav) return;
+  burger.addEventListener('click', () => {
+    nav.classList.toggle('open');
+    burger.textContent = nav.classList.contains('open') ? '✕' : '☰';
+  });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    nav.classList.remove('open'); burger.textContent = '☰';
+  }));
+}
+
+function initPdfButtons() {
+  document.querySelectorAll('[data-open-pdf]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      openPdfViewer(btn.getAttribute('data-open-pdf'));
+    });
+  });
+}
+
+function openPdfViewer(url) {
+  let modal = document.getElementById('pdfModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'pdfModal';
+    modal.className = 'pdf-modal';
+    modal.innerHTML = `
+      <div class="pdf-modal-inner">
+        <div class="pdf-modal-header">
+          <span>Pediatric Surgery / Детская хирургия</span>
+          <button id="pdfModalClose">✕</button>
+        </div>
+        <div class="pdf-modal-body"><iframe id="pdfFrame" src="" title="PDF"></iframe></div>
+      </div>`;
+    document.body.appendChild(modal);
+    document.getElementById('pdfModalClose').onclick = () => {
+      modal.classList.remove('open');
+      document.getElementById('pdfFrame').src = '';
+    };
+    modal.onclick = e => { if (e.target === modal) { modal.classList.remove('open'); document.getElementById('pdfFrame').src = ''; } };
+  }
+  document.getElementById('pdfFrame').src = url + '#toolbar=1';
+  modal.classList.add('open');
+}
+
+function initAIChat() {
+  if (document.getElementById('aiChatBtn')) return;
+  const btn = document.createElement('button');
+  btn.className = 'ai-chat-btn'; btn.id = 'aiChatBtn'; btn.innerHTML = '🤖';
+  document.body.appendChild(btn);
+
+  const panel = document.createElement('div');
+  panel.className = 'ai-chat-panel'; panel.id = 'aiChatPanel';
+  panel.innerHTML = `
+    <div class="ai-chat-header">
+      <span data-i18n="aiTitle">ИИ-помощник</span>
+      <button id="aiChatClose">✕</button>
+    </div>
+    <div class="ai-chat-body">
+      <p style="font-weight:600;margin-bottom:10px;" data-i18n="aiLocal">Поиск по материалам сайта</p>
+      <input id="aiInput" type="text" data-i18n-placeholder="searchPh" placeholder="атрезия, травма..."
+        style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--bg-card);color:var(--text);margin-bottom:10px;font-size:0.95rem;">
+      <button id="aiSearchBtn" class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:14px;">Найти</button>
+      <div id="aiResults" style="font-size:0.9rem;"></div>
+      <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);">
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:10px;" data-i18n="aiWeb">Спросить общий медицинский ИИ</p>
+        <a href="https://chatgpt.com/" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%;justify-content:center;background:#10a37f;margin-bottom:8px;">ChatGPT</a>
+        <a href="https://www.perplexity.ai/" target="_blank" rel="noopener" class="btn" style="width:100%;justify-content:center;background:var(--bg-card);border:1px solid var(--border);color:var(--text);">Perplexity (с источниками)</a>
+      </div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-top:12px;" data-i18n="aiHint"></p>
+    </div>
+    <div class="ai-chat-disclaimer">Не заменяет врача и учебник. Проверяйте важную информацию.</div>
+  `;
+  document.body.appendChild(panel);
+
+  btn.onclick = () => {
+    const open = panel.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    btn.innerHTML = open ? '✕' : '🤖';
+  };
+  document.getElementById('aiChatClose').onclick = () => {
+    panel.classList.remove('open'); btn.classList.remove('open'); btn.innerHTML = '🤖';
+  };
+
+  const doSearch = () => {
+    const q = (document.getElementById('aiInput').value || '').toLowerCase().trim();
+    const results = document.getElementById('aiResults');
+    if (!q) { results.innerHTML = '<p style="color:var(--text-muted)">Введите запрос</p>'; return; }
+    if (typeof fullQuestions === 'undefined') {
+      results.innerHTML = '<p>Откройте страницу «Материалы» для поиска по 182 вопросам.</p>';
+      return;
+    }
+    const found = fullQuestions.filter(i =>
+      i.t.toLowerCase().includes(q) || (i.a && i.a.toLowerCase().includes(q))
+    ).slice(0, 6);
+    if (!found.length) {
+      results.innerHTML = '<p>В материалах не найдено. Попробуйте ChatGPT или Perplexity ниже.</p>';
+      return;
+    }
+    results.innerHTML = found.map(i => `
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:10px;margin-bottom:8px;">
+        <div style="font-weight:700;color:var(--primary);margin-bottom:4px;">№${i.n}. ${i.t}</div>
+        <div style="font-size:0.82rem;color:var(--text-muted);max-height:60px;overflow:hidden;">${(i.a||'').replace(/<[^>]+>/g,'').slice(0,160)}...</div>
+      </div>`).join('');
+  };
+  document.getElementById('aiSearchBtn').onclick = doSearch;
+  document.getElementById('aiInput').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+  applyLang(currentLang);
+}
+</script>
+  <script>
+  const MCQS = [{"q": "Кто является основоположником детской хирургии в Таджикистане?", "opts": ["А.Т. Пулатов", "Ю.Ф. Исаков", "А.Ф. Дронов", "М.П. Разин"], "a": 0}, {"q": "Атрезия пищевода чаще всего сочетается с:", "opts": ["Трахеопищеводным свищом", "Грыжей пищеводного отверстия", "Дивертикулом Ценкера", "Ахалазией"], "a": 0}, {"q": "Классический симптом атрезии пищевода у новорождённого:", "opts": ["Обильная пенистая слюна, цианоз при кормлении", "Рвота «фонтаном»", "Мелена", "Желтуха"], "a": 0}, {"q": "Золотой стандарт диагностики ахалазии пищевода:", "opts": ["Рентген с барием + манометрия", "Только УЗИ", "Только ФГДС", "КТ"], "a": 0}, {"q": "Операция при ахалазии пищевода (классика):", "opts": ["Миотомия по Геллеру", "Фундопликация Ниссена без миотомии", "Резекция пищевода", "Гастростома"], "a": 0}, {"q": "Врождённая долевая эмфизема чаще поражает:", "opts": ["Верхнюю долю левого лёгкого", "Нижнюю долю правого", "Среднюю долю", "Оба лёгких равномерно"], "a": 0}, {"q": "При напряжённой долевой эмфиземе показано:", "opts": ["Лобэктомия", "Только консервативное лечение", "Плевральная пункция", "Антибиотики"], "a": 0}, {"q": "Диафрагмальная грыжа Богдалека — это:", "opts": ["Заднелатеральный дефект диафрагмы", "Передний дефект (Морганьи)", "Грыжа пищеводного отверстия", "Релаксация диафрагмы"], "a": 0}, {"q": "Пилоростеноз типично проявляется в возрасте:", "opts": ["2–8 недель", "Сразу после рождения", "После 1 года", "В подростковом возрасте"], "a": 0}, {"q": "Классический симптом пилоростеноза:", "opts": ["Рвота «фонтаном» без желчи", "Рвота с желчью", "Диарея", "Мелена"], "a": 0}, {"q": "Операция выбора при пилоростенозе:", "opts": ["Пилоромиотомия по Фреде–Рамштедту", "Резекция желудка", "Гастроэнтероанастомоз", "Фундопликация"], "a": 0}, {"q": "При травме почки у ребёнка первым методом визуализации часто является:", "opts": ["УЗИ", "Обзорная рентгенография", "Сцинтиграфия", "Ангиография"], "a": 0}, {"q": "Внутрибрюшинный разрыв мочевого пузыря обычно проявляется:", "opts": ["Анурией, болями в животе, перитонеальными симптомами", "Только гематурией без клиники", "Только отёком мошонки", "Кашлем"], "a": 0}, {"q": "При атрезии пищевода с дистальным ТПС в желудке:", "opts": ["Есть воздух", "Нет воздуха никогда", "Всегда жидкость", "Всегда кровь"], "a": 0}, {"q": "VACTERL-ассоциация включает всё, кроме:", "opts": ["Лейкемии", "Аномалий позвоночника", "Атрезии ануса", "Пороков сердца"], "a": 0}, {"q": "Основной метод подтверждения ГЭР у детей:", "opts": ["pH-мониторинг / импеданс", "Только рентген", "Только УЗИ", "Только эндоскопия"], "a": 0}, {"q": "Фундопликация Ниссена применяется при:", "opts": ["Тяжёлом ГЭР, не поддающемся терапии", "Пилоростенозе", "Атрезии ануса", "Инвагинации"], "a": 0}, {"q": "Секвестрация лёгкого — это:", "opts": ["Участок лёгочной ткани с аномальным кровоснабжением", "Обычная пневмония", "Туберкулёма", "Метастаз"], "a": 0}, {"q": "При остром отравлении у ребёнка первое действие:", "opts": ["Оценка ABC, стабилизация", "Сразу промывание желудка в любом случае", "Сразу антидот без осмотра", "Госпитализация без первой помощи"], "a": 0}, {"q": "Мочекаменная болезнь у детей в эндемичных регионах часто связана с:", "opts": ["Метаболическими нарушениями и водой", "Только инфекцией", "Только травмой", "Только опухолями"], "a": 0}];
+  const BANK = [{"n": 1, "t": "Основоположник детской хирургии в Таджикистане. Особенности детского возраста. История развития", "kw": ["особенности", "история", "исакову", "25--36", "разумовскому", "таджикистан", "сайту", "википедии", "некрологу", "интернет"]}, {"n": 2, "t": "Атрезия пищевода. Этиология и патогенез", "kw": ["разумовский", "459--460", "исаков", "217--218", "ключевые", "слова", "атрезия", "пищевода", "передняя", "кишка"]}, {"n": 3, "t": "Атрезия пищевода. Клиника и классификация", "kw": ["разумовский", "460--461", "исаков", "217--220", "ключевые", "слова", "классификация", "дистальный", "пенистые", "выделения"]}, {"n": 4, "t": "Атрезия пищевода. Диагностика и дифференциальная диагностика", "kw": ["диагностика", "разумовский", "461--462", "исаков", "218--220", "дифференциальная", "перечень", "исакова", "общие", "учебники"]}, {"n": 5, "t": "Атрезия пищевода. Лечение и осложнения", "kw": ["исаков", "220--222", "разумовский", "460--462", "метод", "операции", "главе", "описан", "осложнения", "221--222"]}, {"n": 6, "t": "Ахалазия пищевода. Этиология и патогенез", "kw": ["разумовский", "исаков", "223--224", "ключевые", "слова", "ахалазия", "кардия", "ауэрбахово", "сплетение", "нейрогенная"]}, {"n": 7, "t": "Ахалазия пищевода. Клиника, диагностика и дифференциальная диагностика", "kw": ["разумовский", "143--145", "исаков", "224--226", "ключевые", "слова", "дисфагия", "регургитация", "рентген", "барием"]}, {"n": 8, "t": "Ахалазия пищевода. Лечение и осложнения", "kw": ["разумовский", "исаков", "ключевые", "слова", "операция", "геллера", "кардиомиотомия", "фундопликация", "лапароскопия", "диспансеризация"]}, {"n": 9, "t": "Гастроэзофагеальный рефлюкс. Этиология и патогенез", "kw": ["разумовский", "146--147", "исаков", "226--228", "ключевые", "слова", "антирефлюксный", "барьер", "нижний", "пищеводный"]}, {"n": 10, "t": "Гастроэзофагеальный рефлюкс. Клиника и классификация", "kw": ["клиника", "физиологический", "патологический", "рефлюкс", "разумовский", "исаков", "233--234", "рабочие", "классификации", "эзофагита"]}, {"n": 11, "t": "Гастроэзофагеальный рефлюкс. Диагностика и дифференциальная диагностика", "kw": ["разумовский", "исаков", "229--234", "дифференциальная", "диагностика", "общие", "учебники", "ключевые", "слова", "рн-мониторинг"]}, {"n": 12, "t": "Гастроэзофагеальный рефлюкс. Лечение и осложнения", "kw": ["исаков", "234--237", "разумовский", "147--150", "послеоперационные", "осложнения", "ключевые", "слова", "постуральная", "терапия"]}, {"n": 13, "t": "Лобарная эмфизема. Этиология и патогенез", "kw": ["разумовский", "122--123", "исаков", "192--193", "книгах", "называется", "врождённая", "долевая", "локализованная", "эмфизема"]}, {"n": 14, "t": "Лобарная эмфизема. Клиника и классификация", "kw": ["разумовский", "122--124", "исаков", "192--194", "ключевые", "слова", "декомпенсированная", "субкомпенсированная", "компенсированная", "дыхательная"]}, {"n": 15, "t": "Лобарная эмфизема. Диагностика и дифференциальная диагностика", "kw": ["разумовский", "123--124", "исаков", "193--194", "ключевые", "слова", "рентген", "радиоизотопное", "исследование", "бронхоскопия"]}, {"n": 16, "t": "Лобарная эмфизема. Лечение и осложнения", "kw": ["разумовский", "исаков", "осложнения", "операции", "общим", "учебникам", "книгах", "описаны", "ключевые", "слова"]}, {"n": 17, "t": "Врождённые кисты лёгкого. Этиология, патогенез и клиника", "kw": ["исаков", "194--197", "разумовский", "124--125", "книгах", "солитарная", "бронхогенная", "киста", "ключевые", "слова"]}, {"n": 18, "t": "Врождённые кисты лёгкого. Классификация, диагностика и дифференциальная диагностика", "kw": ["разумовский", "124--126", "исаков", "196--197", "деление", "расположению", "книгам", "ключевые", "слова", "стокеру"]}, {"n": 19, "t": "Врождённые кисты лёгкого. Лечение и осложнения", "kw": ["исаков", "разумовский", "125--126", "осложнения", "операции", "общим", "учебникам", "ключевые", "слова", "лобэктомия"]}, {"n": 20, "t": "Секвестрация лёгких. Классификация, диагностика и дифференциальная диагностика", "kw": ["разумовский", "126--127", "исаков", "197--199", "ключевые", "слова", "секвестрация", "аномальный", "сосуд", "аорты"]}, {"n": 21, "t": "Секвестрация лёгких. Лечение и осложнения", "kw": ["разумовский", "125--128", "исаков", "197--199", "осложнения", "операции", "общим", "учебникам", "ключевые", "слова"]}, {"n": 22, "t": "Агенезия, аплазия и гипоплазия лёгких. Этиология, патогенез и клиника", "kw": ["разумовский", "120--122", "исаков", "187--191", "ключевые", "слова", "агенезия", "аплазия", "гипоплазия", "тератогенные"]}, {"n": 23, "t": "Агенезия, аплазия и гипоплазия лёгких. Классификация, диагностика и дифференциальная диагностика", "kw": ["разумовский", "120--122", "исаков", "188--191", "4-20--4-22", "дифференциальная", "диагностика", "гипоплазии", "частично", "учебникам"]}, {"n": 24, "t": "Агенезия, аплазия и гипоплазия лёгких. Лечение и осложнения", "kw": ["разумовский", "121--122", "исаков", "осложнения", "книгам", "ключевые", "слова", "сохранить", "лёгочную", "ткань"]}, {"n": 25, "t": "Диафрагмальная грыжа. Этиология и патогенез", "kw": ["разумовский", "163--165", "исаков", "249--253", "ключевые", "слова", "перегородка", "диафрагмы", "грыжа", "бохдалека"]}, {"n": 26, "t": "Диафрагмальная грыжа. Клиника и классификация", "kw": ["разумовский", "164--167", "1--10", "исаков", "250--254", "ключевые", "слова", "диафрагмально-плевральная", "парастернальная", "френоперикардиальная"]}, {"n": 27, "t": "Диафрагмальная грыжа. Диагностика и дифференциальная диагностика", "kw": ["разумовский", "168--171", "7--10", "исаков", "254--258", "часть", "дифдиагностики", "учебникам", "ключевые", "слова"]}, {"n": 28, "t": "Диафрагмальная грыжа. Лечение и осложнения", "kw": ["разумовский", "170--172", "исаков", "258--261", "общие", "послеоперационные", "осложнения", "учебникам", "ключевые", "слова"]}, {"n": 29, "t": "Пилоростеноз у детей. Этиология, патогенез и клиника", "kw": ["разумовский", "473--474", "исаков", "ключевые", "слова", "гипертрофия", "привратника", "рвота", "фонтаном", "метаболический"]}, {"n": 30, "t": "Пилоростеноз у детей. Классификация, диагностика и дифференциальная диагностика", "kw": ["разумовский", "474--475", "исаков", "329--332", "5-18--5-20", "ключевые", "слова", "симптом", "клюва", "пилороспазм"]}, {"n": 31, "t": "Пилоростеноз у детей. Лечение и осложнения", "kw": ["разумовский", "474--476", "исаков", "331--332", "ключевые", "слова", "пилоромиотомия", "фреде--рамштедт", "регидратация", "перфорация"]}, {"n": 32, "t": "Синдром Ледда. Этиология, патогенез и клиника", "kw": ["исаков", "315--318", "разумовский", "эмбриология", "частота", "интернет", "общие", "учебники", "ключевые", "слова"]}, {"n": 33, "t": "Синдром Ледда. Классификация, диагностика и дифференциальная диагностика", "kw": ["исаков", "313--317", "классификация", "часть", "диагностики", "общие", "учебники", "исакове", "ключевые", "слова"]}, {"n": 34, "t": "Синдром Ледда. Лечение и осложнения", "kw": ["исаков", "317--318", "техника", "операции", "осложнения", "общие", "учебники", "статьи", "интернета", "ключевые"]}, {"n": 35, "t": "Мекониальный илеус у новорождённых. Этиология, патогенез и клиника", "kw": ["разумовский", "496--497", "исаков", "321--322", "ключевые", "слова", "муковисцидоз", "вязкий", "меконий", "тонкокишечная"]}, {"n": 36, "t": "Мекониальный илеус у новорождённых. Классификация, диагностика и дифференциальная диагностика", "kw": ["разумовский", "497--498", "исаков", "322--323", "ключевые", "слова", "симптом", "мыльной", "микроколон", "потовый"]}, {"n": 37, "t": "Мекониальный илеус у новорождённых. Лечение и осложнения", "kw": ["разумовский", "498--503", "исаков", "323--324", "ключевые", "слова", "гастрографин", "двойная", "энтеростома", "bishop--koop"]}, {"n": 38, "t": "Атрезия тонкого кишечника у новорождённых. Этиология, патогенез и клиника", "kw": ["разумовский", "483--487", "исаков", "ключевые", "слова", "атрезия", "сосудистая", "теория", "тощая", "подвздошная"]}, {"n": 39, "t": "Атрезия тонкого кишечника у новорождённых. Классификация, диагностика и дифференциальная диагностика", "kw": ["разумовский", "485--488", "1--33", "исаков", "318--319", "ключевые", "слова", "i--iv", "яблочная", "кожура"]}, {"n": 40, "t": "Атрезия тонкого кишечника у новорождённых. Лечение и осложнения", "kw": ["разумовский", "488--490", "исаков", "319--320", "ключевые", "слова", "декомпрессия", "анастомоз", "конец", "пликация"]}, {"n": 41, "t": "Болезнь Гиршпрунга. Этиология, патогенез и клиника", "kw": ["разумовский", "370--373", "исаков", "382--387", "ключевые", "слова", "аганглиоз", "нейробласты", "супрастенотическое", "расширение"]}, {"n": 42, "t": "Болезнь Гиршпрунга. Классификация, диагностика и дифференциальная диагностика", "kw": ["разумовский", "372--377", "1--24", "исаков", "383--391", "ключевые", "слова", "классификация", "лёнюшкина", "ирригография"]}, {"n": 43, "t": "Болезнь Гиршпрунга. Лечение и осложнения", "kw": ["разумовский", "377--379", "исаков", "391--394", "ключевые", "слова", "операция", "свенсона", "дюамель--баиров", "соаве"]}, {"n": 44, "t": "Долихосигма. Этиология, патогенез и клиника", "kw": ["книгах", "долихосигма", "упомянута", "связи", "исаков", "разумовский", "основное", "интернет", "общие", "учебники"]}, {"n": 45, "t": "Долихосигма. Диагностика и дифференциальная диагностика", "kw": ["исаков", "разумовский", "374--377", "ирригографические", "признаки", "интернет", "ключевые", "слова", "ирригография", "петли"]}, {"n": 46, "t": "Долихосигма. Лечение и осложнения", "kw": ["копростаз", "клизмы", "исаков", "350--351", "консервативная", "схема", "показания", "операции", "интернет", "общие"]}, {"n": 47, "t": "Болезнь Пайра у детей. Этиология, патогенез и клиника", "kw": ["твоих", "книгах", "болезни", "пайра", "источники", "статьи", "синдроме", "детей", "консультант", "врача"]}, {"n": 48, "t": "Болезнь Пайра у детей. Диагностика и дифференциальная диагностика", "kw": ["твоих", "книгах", "болезни", "пайра", "источники", "статьи", "синдроме", "детей", "общие", "учебники"]}, {"n": 49, "t": "Болезнь Пайра у детей. Лечение и осложнения", "kw": ["твоих", "книгах", "болезни", "пайра", "источники", "описание", "синдрома", "клиники", "статьи", "кафедр"]}, {"n": 50, "t": "Атрезия ануса. Этиология, патогенез и клиника", "kw": ["разумовский", "411--414", "1--25", "исаков", "394--397", "ключевые", "слова", "аноректальные", "пороки", "клоака"]}, {"n": 51, "t": "Атрезия ануса. Классификация, диагностика и дифференциальная диагностика", "kw": ["разумовский", "414--425", "1--25", "исаков", "397--404", "крикенбекская", "классификация", "клинические", "рекомендации", "интернет"]}, {"n": 52, "t": "Атрезия ануса. Лечение и осложнения", "kw": ["разумовский", "426--440", "12--25", "исаков", "399--405", "осложнения", "частично", "общим", "учебникам", "ключевые"]}, {"n": 53, "t": "Пороки развития почек. Этиология и патогенез", "kw": ["разумовский", "42--43", "544--546", "исаков", "437--439", "общие", "факторы", "риска", "учебникам", "ключевые"]}, {"n": 54, "t": "Пороки развития почек. Клиника и классификация", "kw": ["разумовский", "43--44", "546--569", "исаков", "439--463", "мкб-10", "разумовскому", "ключевые", "слова", "классификация"]}, {"n": 55, "t": "Пороки развития почек. Диагностика и дифференциальная диагностика", "kw": ["разумовский", "43--44", "исаков", "439--463", "общий", "алгоритм", "обследования", "учебникам", "ключевые", "слова"]}, {"n": 56, "t": "Пороки развития почек. Лечение и осложнения", "kw": ["разумовский", "43--44", "547--570", "исаков", "439--466", "лечение", "удвоения", "поликистоза", "частично", "учебникам"]}, {"n": 57, "t": "Гидронефроз у детей. Этиология и патогенез", "kw": ["разумовский", "575--577", "исаков", "466--467", "ключевые", "слова", "обструкция", "вазоуретеральный", "конфликт", "пиелоренальные"]}, {"n": 58, "t": "Гидронефроз у детей. Клиника и классификация", "kw": ["разумовский", "577--578", "исаков", "466--468", "клинические", "рекомендации", "гидронефроз", "medelement", "лопаткин", "ключевые"]}, {"n": 59, "t": "Гидронефроз у детей. Диагностика и дифференциальная диагностика", "kw": ["разумовский", "578--580", "исаков", "468--470", "ключевые", "слова", "диуретическая", "проба", "экскреторная", "урография"]}, {"n": 60, "t": "Гидронефроз у детей. Лечение и осложнения", "kw": ["разумовский", "580--583", "исаков", "470--471", "ключевые", "слова", "пиелопластика", "хайнса--андерсона", "динамическое", "наблюдение"]}, {"n": 61, "t": "Мегауретер у детей. Этиология, патогенез и клиника", "kw": ["разумовский", "584--586", "исаков", "471--475", "ключевые", "слова", "мегауретер", "уретеровезикальный", "сегмент", "нейромышечная"]}, {"n": 62, "t": "Мегауретер у детей. Классификация, диагностика и дифференциальная диагностика", "kw": ["разумовский", "585--588", "исаков", "472--475", "6-43--6-45", "классификации", "smith", "степени", "функции", "почки"]}, {"n": 63, "t": "Мегауретер у детей. Лечение и осложнения", "kw": ["разумовский", "588--590", "исаков", "475--476", "осложнения", "8--40", "общие", "учебники", "ключевые", "слова"]}, {"n": 64, "t": "Уретероцеле у детей. Этиология, патогенез и клиника", "kw": ["разумовский", "560--561", "11--43", "исаков", "443--444", "подробности", "интернет", "клинические", "описания", "статьи"]}, {"n": 65, "t": "Уретероцеле у детей. Классификация, диагностика и дифференциальная диагностика", "kw": ["классификация", "интернет", "клинические", "описания", "статьи", "детской", "урологии", "диагностика", "разумовский", "исаков"]}, {"n": 66, "t": "Уретероцеле у детей. Лечение и осложнения", "kw": ["разумовский", "561--562", "исаков", "443--444", "эндоскопическое", "рассечение", "интернет", "клинические", "описания", "статьи"]}, {"n": 67, "t": "Экстрофия мочевого пузыря у детей. Этиология, патогенез и клиника", "kw": ["разумовский", "603--604", "исаков", "479--480", "патогенез", "общие", "учебники", "ключевые", "слова", "экстрофия"]}, {"n": 68, "t": "Экстрофия мочевого пузыря у детей. Классификация, диагностика и дифференциальная диагностика", "kw": ["классификация", "клинические", "рекомендации", "экстрофия", "мочевого", "пузыря", "детей", "педиатров", "россии", "обзоры"]}, {"n": 69, "t": "Экстрофия мочевого пузыря у детей. Лечение и осложнения", "kw": ["разумовский", "604--606", "исаков", "современная", "тактика", "клинические", "рекомендации", "ключевые", "слова", "пластика"]}, {"n": 70, "t": "Эписпадия у детей. Этиология, патогенез и клиника", "kw": ["разумовский", "606--607", "исаков", "494--495", "эмбриология", "клинические", "рекомендации", "ключевые", "слова", "эписпадия"]}, {"n": 71, "t": "Эписпадия у детей. Классификация, диагностика и дифференциальная диагностика", "kw": ["разумовский", "606--609", "исаков", "494--495", "дифференциальная", "диагностика", "учебникам", "ключевые", "слова", "классификация"]}, {"n": 72, "t": "Эписпадия у детей. Лечение и осложнения", "kw": ["разумовский", "607--610", "4--46", "исаков", "494--496", "осложнения", "частично", "общим", "учебникам", "ключевые"]}, {"n": 73, "t": "Гермафродитизм у детей. Этиология, патогенез и клиника", "kw": ["исаков", "491--493", "разумовский", "современная", "терминология", "этиология", "интернет", "общие", "учебники", "чикагский"]}, {"n": 74, "t": "Гермафродитизм у детей. Классификация, диагностика и дифференциальная диагностика", "kw": ["исаков", "491--493", "чикагский", "консенсус", "современные", "критерии", "интернет", "статья", "полярность", "взглядов"]}, {"n": 75, "t": "Гермафродитизм у детей. Лечение и осложнения", "kw": ["исаков", "493--494", "современные", "принципы", "осложнения", "общие", "учебники", "интернет", "ключевые", "слова"]}, {"n": 76, "t": "Фимоз у детей. Этиология, патогенез, клиника, классификация, диагностика и дифференциальная диагностика", "kw": ["исаков", "501--503", "разумовский", "598--600", "инфравезикальная", "обструкция", "деление", "физиологический", "патологический", "степени"]}, {"n": 77, "t": "Фимоз у детей. Лечение и осложнения", "kw": ["исаков", "502--503", "разумовский", "консервативная", "терапия", "стероидными", "мазями", "интернет", "общие", "учебники"]}, {"n": 78, "t": "Омфалоцеле у детей. Этиология и патогенез", "kw": ["разумовский", "442--443", "исаков", "293--294", "ключевые", "слова", "омфалоцеле", "грыжа", "пупочного", "канатика"]}, {"n": 79, "t": "Омфалоцеле у детей. Клиника и классификация", "kw": ["разумовский", "443--445", "1--26", "исаков", "классификация", "клиническая", "картина", "ключевые", "слова", "малые"]}, {"n": 80, "t": "Омфалоцеле у детей. Диагностика и дифференциальная диагностика", "kw": ["разумовский", "444--445", "4--26", "исаков", "дифференциальная", "диагностика", "частично", "учебникам", "ключевые", "слова"]}, {"n": 81, "t": "Омфалоцеле у детей. Лечение и осложнения", "kw": ["разумовский", "444--447", "5--26", "исаков", "295--296", "ключевые", "слова", "радикальная", "пластика", "силопластика"]}, {"n": 82, "t": "Гастрошизис у детей. Этиология и патогенез", "kw": ["разумовский", "448--450", "исаков", "296--297", "ключевые", "слова", "гастрошизис", "сосудистая", "теория", "пупочная"]}, {"n": 83, "t": "Гастрошизис у детей. Клиника и классификация", "kw": ["разумовский", "448--450", "1--27", "исаков", "296--297", "ключевые", "слова", "простая", "форма", "осложнённая"]}, {"n": 84, "t": "Гастрошизис у детей. Диагностика и дифференциальная диагностика", "kw": ["разумовский", "449--452", "исаков", "таблица", "сравнения", "учебникам", "ключевые", "слова", "антенатальное", "недели"]}, {"n": 85, "t": "Гастрошизис у детей. Лечение и осложнения", "kw": ["разумовский", "450--457", "исаков", "297--298", "ключевые", "слова", "пластиковый", "пакет", "безнаркозное", "вправление"]}, {"n": 86, "t": "Грыжи у детей. Этиология и патогенез", "kw": ["разумовский", "188--191", "681--682", "исаков", "511--514", "разобраны", "основные", "грыжи", "детей", "ключевые"]}, {"n": 87, "t": "Грыжи у детей. Клиника и классификация", "kw": ["разумовский", "188--191", "1--13", "682--686", "исаков", "511--514", "диагностика", "лечение", "полноты", "ответа"]}, {"n": 88, "t": "Крипторхизм у детей. Диагностика и дифференциальная диагностика", "kw": ["разумовский", "662--669", "1--50", "исаков", "505--508", "6-60--6-63", "ключевые", "слова", "крипторхизм", "эктопия"]}, {"n": 89, "t": "Крипторхизм у детей. Лечение и осложнения", "kw": ["разумовский", "669--672", "исаков", "506--509", "послеоперационные", "осложнения", "частично", "общим", "учебникам", "ключевые"]}, {"n": 90, "t": "Варикоцеле у детей. Этиология и патогенез", "kw": ["разумовский", "673--675", "исаков", "515--517", "классификация", "клиника", "диагностика", "лечение", "следующая", "партия"]}, {"n": 91, "t": "Варикоцеле у детей. Клиника и классификация", "kw": ["разумовский", "674--675", "исаков", "515--516", "ключевые", "слова", "классификация", "степени", "i--iii", "первичное"]}, {"n": 92, "t": "Варикоцеле у детей. Диагностика и дифференциальная диагностика", "kw": ["разумовский", "675--677", "2--50", "исаков", "часть", "дифференциальной", "диагностики", "учебникам", "ключевые", "слова"]}, {"n": 93, "t": "Варикоцеле у детей. Лечение и осложнения", "kw": ["разумовский", "677--680", "исаков", "516--517", "ключевые", "слова", "показания", "операции", "операция", "иванисевича"]}, {"n": 94, "t": "Врождённый свищ пупка у детей. Этиология и патогенез", "kw": ["разумовский", "195--196", "исаков", "283--285", "урахус", "клиническим", "обзорам", "интернете", "ключевые", "слова"]}, {"n": 95, "t": "Врождённый свищ пупка у детей. Клиника и классификация", "kw": ["разумовский", "195--197", "исаков", "283--285", "классификация", "происхождению", "интернет", "обзоры", "ключевые", "слова"]}, {"n": 96, "t": "Врождённый свищ пупка у детей. Диагностика и дифференциальная диагностика", "kw": ["разумовский", "195--197", "исаков", "285--286", "диагностика", "урахальных", "свищей", "часть", "дифдиагностики", "интернет"]}, {"n": 97, "t": "Врождённый свищ пупка у детей. Лечение и осложнения", "kw": ["разумовский", "195--197", "исаков", "285--286", "урахальные", "свищи", "интернет", "ключевые", "слова", "иссечение"]}, {"n": 98, "t": "Энтерокистомы у детей. Этиология и патогенез", "kw": ["разумовский", "506--507", "исаков", "320--321", "теории", "возникновения", "интернет", "клинические", "обзоры", "ключевые"]}, {"n": 99, "t": "Энтерокистомы у детей. Клиника и классификация", "kw": ["разумовский", "506--508", "исаков", "320--321", "классификация", "кистозные", "тубулярные", "клинические", "обзоры", "справочники"]}, {"n": 100, "t": "Энтерокистомы у детей. Диагностика и дифференциальная диагностика", "kw": ["разумовский", "506--508", "1--36", "исаков", "324--325", "синдром", "пальпируемой", "опухоли", "ключевые", "слова"]}, {"n": 101, "t": "Энтерокистомы у детей. Лечение и осложнения", "kw": ["разумовский", "507--509", "исаков", "320--321", "324--325", "ключевые", "слова", "цистэктомия", "резекция", "сегмента"]}, {"n": 102, "t": "Аппендицит у детей. Этиология и патогенез", "kw": ["разумовский", "305--306", "исаков", "578--580", "ключевые", "слова", "червеобразный", "отросток", "фолликулярный", "аппарат"]}, {"n": 103, "t": "Аппендицит у детей. Клиника", "kw": ["разумовский", "306--307", "исаков", "580--583", "ключевые", "слова", "животе", "рвота", "температура", "атипичная"]}, {"n": 104, "t": "Аппендицит у детей. Классификация", "kw": ["разумовский", "315--316", "исаков", "деление", "морфологии", "общие", "учебники", "ключевые", "слова", "деструктивные"]}, {"n": 105, "t": "Аппендицит у детей. Диагностика и дифференциальная диагностика", "kw": ["разумовский", "307--313", "исаков", "583--598", "ключевые", "слова", "аппендикса", "ректальное", "исследование", "лейкоцитоз"]}, {"n": 106, "t": "Аппендицит у детей. Лечение", "kw": ["разумовский", "313--315", "3--20", "исаков", "598--599", "ключевые", "слова", "аппендэктомия", "лигатурный", "способ"]}, {"n": 107, "t": "Аппендицит у детей. Осложнения", "kw": ["разумовский", "315--326", "исаков", "601--606", "послеоперационные", "осложнения", "частично", "общим", "учебникам", "ключевые"]}, {"n": 108, "t": "Особенности течения острого аппендицита у новорождённых и детей раннего возраста", "kw": ["разумовский", "306--309", "311--313", "исаков", "585--598", "599--601", "аппендицит", "новорождённых", "ключевые", "слова"]}, {"n": 109, "t": "Особенности течения острого аппендицита у детей старшего возраста", "kw": ["разумовский", "306--307", "309--311", "исаков", "581--585", "592--598", "ключевые", "слова", "школьного", "возраста"]}, {"n": 110, "t": "Дивертикул Меккеля. Этиология, патогенез и клиника", "kw": ["разумовский", "197--200", "7--13", "исаков", "286--287", "ключевые", "слова", "дивертикул", "меккеля", "желточный"]}, {"n": 110, "t": "Дивертикул Меккеля. Этиология, патогенез и клиника", "kw": ["ключевые", "слова", "желточный", "проток", "илеум", "гетеротопия", "слизистой", "кровотечение", "дивертикул", "меккеля"]}, {"n": 111, "t": "Дивертикул Меккеля. Классификация, диагностика и диф. диагностика", "kw": ["ключевые", "слова", "классификация", "99mtc-сцинтиграфия", "лапароскопия", "ангиоматоз", "ректальное", "исследование", "осложнениям", "группа"]}, {"n": 112, "t": "Дивертикул Меккеля. Лечение", "kw": ["ключевые", "слова", "резекция", "дивертикула", "клиновидное", "иссечение", "лапароскопия", "лечение", "только", "хирургическое"]}, {"n": 113, "t": "Дивертикул Меккеля. Осложнения", "kw": ["ключевые", "слова", "кровотечение", "дивертикулит", "инвагинация", "странгуляция", "грыжа", "литтре", "осложнения", "возникают"]}, {"n": 114, "t": "Особенности течения перитонита у новорождённых и детей раннего возраста", "kw": ["ключевые", "слова", "низкие", "пластические", "свойства", "брюшины", "недоразвитие", "сальника", "быстрая", "интоксикация"]}, {"n": 115, "t": "Перитонит у новорождённых. Этиология, патогенез и клиника", "kw": ["ключевые", "слова", "перфорация", "перитонеальный", "симптом", "исчезновения", "печёночной", "тупости", "перитонит", "новорождённых"]}, {"n": 116, "t": "Перитонит у новорождённых. Классификация", "kw": ["ключевые", "слова", "перфоративный", "неперфоративный", "пренатальный", "фиброзно-гнойный", "мекониевый", "классификация", "перитонита", "новорождённых"]}, {"n": 117, "t": "Перитонит у новорождённых. Диагностика и диф. диагностика", "kw": ["ключевые", "слова", "обзорная", "рентгенограмма", "пневмоперитонеум", "лапароскопия", "media", "image132", "width", "8749989063867016in"]}, {"n": 118, "t": "Перитонит у новорождённых. Лечение и осложнения", "kw": ["ключевые", "слова", "пункция", "брюшной", "полости", "верхне-поперечная", "лапаротомия", "энтеростома", "санация", "дренирование"]}, {"n": 119, "t": "Перитонит у детей. Этиология и патогенез", "kw": ["ключевые", "слова", "воспаление", "брюшины", "резорбция", "токсинов", "гиповолемия", "метаболический", "ацидоз", "перитонит"]}, {"n": 120, "t": "Перитонит у детей. Клиника", "kw": ["ключевые", "слова", "рвота", "лихорадка", "симптом", "щёткина--блюмберга", "ректальное", "исследование", "дыхательная", "недостаточность"]}, {"n": 121, "t": "Перитонит у детей. Классификация", "kw": ["ключевые", "слова", "общий", "местный", "перфоративный", "криптогенный", "перитонит", "воспаление", "брюшины", "сопровождающееся"]}, {"n": 122, "t": "Перитонит у детей. Диагностика и диф. диагностика", "kw": ["ключевые", "слова", "гематокрит", "лапароскопия", "дифдиагностика", "диагностика", "метод", "находят", "осмотр", "тяжёлое"]}, {"n": 123, "t": "Перитонит у детей. Лечение и осложнения", "kw": ["ключевые", "слова", "предоперационная", "подготовка", "санация", "дренирование", "антибиотики", "абсцессы", "лечение", "складывается"]}, {"n": 124, "t": "Инвагинация кишечника. Этиология, патогенез и клиника", "kw": ["ключевые", "слова", "илеоцекальный", "малиновое", "пальпируемое", "образование", "грудной", "возраст", "инвагинация", "кишечника"]}, {"n": 125, "t": "Инвагинация кишечника. Классификация, диагностика и диф. диагностика", "kw": ["ключевые", "слова", "илеоцекальная", "симптом", "мишени", "пневмоирригоскопия", "гемоколит", "классификация", "локализации", "характеристика"]}, {"n": 126, "t": "Инвагинация кишечника. Лечение и осложнения", "kw": ["ключевые", "слова", "пневмоскопическая", "дезинвагинация", "лапароскопическая", "резекция", "кишки", "рецидив", "консервативное", "лечение"]}, {"n": 127, "t": "Странгуляционная кишечная непроходимость у детей. Этиология, патогенез и клиника", "kw": ["ключевые", "слова", "странгуляция", "заворот", "ущемление", "нарушение", "кровообращения", "странгуляционная", "кишечная", "непроходимость"]}, {"n": 128, "t": "Странгуляционная кишечная непроходимость у детей. Диагностика и диф. диагностика", "kw": ["ключевые", "слова", "обзорная", "рентгенограмма", "уровни", "жидкости", "дифдиагностика", "диагностика", "метод", "находят"]}, {"n": 129, "t": "Странгуляционная кишечная непроходимость у детей. Лечение и осложнения", "kw": ["ключевые", "слова", "экстренная", "операция", "деторсия", "резекция", "кишки", "лапароскопия", "лечение", "хирургическое"]}, {"n": 130, "t": "Обтурационная кишечная непроходимость у детей. Этиология, патогенез и клиника", "kw": ["ключевые", "слова", "копростаз", "каловые", "камни", "аскариды", "опухоль", "симптом", "обтурационная", "кишечная"]}, {"n": 131, "t": "Спаечная кишечная непроходимость у детей. Диагностика, диф. диагностика, лечение и осложнения", "kw": ["ключевые", "слова", "спайки", "ранняя", "поздняя", "неостигмин", "лапароскопический", "адгезиолизис", "острая", "спаечная"]}, {"n": 132, "t": "Особенности течения эпифизарного остеомиелита у новорождённых", "kw": ["разумовский", "534--537", "1--41", "исаков", "576--578", "ключевые", "слова", "метаэпифизарная", "гнойный", "артрит"]}, {"n": 133, "t": "Эпифизарный остеомиелит у новорождённых. Лечение и осложнение", "kw": ["разумовский", "536--537", "исаков", "577--578", "ключевые", "слова", "иммобилизация", "лейкопластырное", "вытяжение", "пункция"]}, {"n": 134, "t": "Гематогенный остеомиелит у детей. Этиология и патогенез", "kw": ["разумовский", "766--770", "исаков", "557--559", "мкб-10", "ключевые", "слова", "бактериемия", "стафилококк", "метафиз"]}, {"n": 135, "t": "Гематогенный остеомиелит у детей. Клиника", "kw": ["разумовский", "769--771", "исаков", "559--561", "ключевые", "слова", "локальная", "форма", "генерализованная", "токсическая"]}, {"n": 136, "t": "Гематогенный остеомиелит у детей. Классификация", "kw": ["разумовский", "1--59", "исаков", "557--575", "общее", "деление", "локализации", "общим", "учебникам", "ключевые"]}, {"n": 137, "t": "Гематогенный остеомиелит у детей. Диагностика и диф. диагностика", "kw": ["разумовский", "771--773", "776--777", "исаков", "561--563", "ключевые", "слова", "рентген", "14--21", "линейный"]}, {"n": 138, "t": "Гематогенный остеомиелит у детей. Лечение", "kw": ["разумовский", "773--779", "исаков", "563--575", "ключевые", "слова", "остеоперфорация", "антибиотики", "дезинтоксикация", "иммунотерапия"]}, {"n": 139, "t": "Гематогенный остеомиелит у детей. Осложнение", "kw": ["разумовский", "768--779", "1--59", "исаков", "557--578", "7-7--7-13", "ключевые", "слова", "внутрикостная", "гипертензия"]}, {"n": 140, "t": "Деструктивная пневмония у детей. Этиология и патогенез", "kw": ["разумовский", "133--138", "исаков", "207--213", "мкб-10", "j13--j15", "ключевые", "слова", "бактериальная", "деструкция"]}, {"n": 141, "t": "Деструктивная пневмония у детей. Клиника и классификация", "kw": ["разумовский", "134--140", "исаков", "208--215", "ключевые", "слова", "инфильтрация", "булла", "абсцесс", "плащевидный"]}, {"n": 142, "t": "Деструктивная пневмония у детей. Диагностика и диф. диагностика", "kw": ["разумовский", "135--141", "11--8", "исаков", "209--214", "часть", "дифференциальной", "диагностики", "общим", "принципам"]}, {"n": 143, "t": "Деструктивная пневмония у детей. Лечение и осложнение", "kw": ["разумовский", "136--142", "исаков", "210--217", "ключевые", "слова", "антибиотики", "бронхоскопическая", "санация", "плевральная"]}, {"n": 144, "t": "Бронхоэктатическая болезнь у детей. Этиология и патогенез", "kw": ["разумовский", "128--130", "исаков", "200--205", "мкб-10", "врождённая", "бронхоэктазия", "ключевые", "слова", "расширение"]}, {"n": 145, "t": "Бронхоэктатическая болезнь у детей. Клиника и классификация", "kw": ["разумовский", "исаков", "202--204", "единой", "клинической", "классификации", "стадиям", "книгах", "привожу", "данную"]}, {"n": 146, "t": "Бронхоэктатическая болезнь у детей. Диагностика и диф. диагностика", "kw": ["разумовский", "130--132", "исаков", "203--205", "ключевые", "слова", "лёгких", "бронхография", "бронхоскопия", "потовая"]}, {"n": 147, "t": "Бронхоэктатическая болезнь у детей. Лечение и осложнение", "kw": ["разумовский", "132--133", "исаков", "205--207", "часть", "осложнений", "общим", "учебникам", "ключевые", "слова"]}, {"n": 148, "t": "Эхинококк печени у детей. Этиология, патогенез и клиника", "kw": ["твоих", "книгах", "главы", "эхинококкоз", "печени", "основа", "разумовский", "соавт", "детей", "анналы"]}, {"n": 149, "t": "Эхинококк печени у детей. Классификация, диагностика и диф. диагностика", "kw": ["разумовский", "исаков", "дифференциальная", "диагностика", "печени", "соавт", "анналы", "хирургической", "гепатологии", "классификация"]}, {"n": 150, "t": "Эхинококк печени у детей. Профилактика, лечение и осложнение", "kw": ["твоих", "книгах", "главы", "эхинококкоз", "печени", "разумовского", "описано", "лечение", "паразитарной", "кисты"]}, {"n": 151, "t": "Эхинококк лёгких у детей. Этиология, патогенез и клиника", "kw": ["книгах", "разумовский", "исаков", "только", "упоминания", "основа", "методические", "рекомендации", "кафедры", "госпитальной"]}, {"n": 152, "t": "Эхинококк лёгких у детей. Классификация, диагностика и диф. диагностика", "kw": ["разумовский", "дифференциальная", "диагностика", "абсцессом", "исаков", "кистозные", "образования", "печени", "остальное", "методические"]}, {"n": 153, "t": "Эхинококк лёгких у детей. Профилактика, лечение и осложнение", "kw": ["исаков", "плановое", "оперативное", "лечение", "разумовский", "албендазол", "формалин", "остальное", "методические", "рекомендации"]}, {"n": 154, "t": "Некротическая флегмона новорождённых. Этиология, патогенез и клиника", "kw": ["разумовский", "530--531", "исаков", "545--546", "ключевые", "слова", "флегмона", "новорождённых", "подкожная", "клетчатка"]}, {"n": 155, "t": "Некротическая флегмона новорождённых. Диагностика и диф. диагностика", "kw": ["разумовский", "530--531", "исаков", "разделы", "лабораторно", "часть", "дифференциальной", "диагностики", "составлены", "общим"]}, {"n": 156, "t": "Некротическая флегмона новорождённых. Лечение и осложнение", "kw": ["разумовский", "исаков", "546--547", "осложнения", "частично", "общим", "принципам", "ключевые", "слова", "насечки"]}, {"n": 157, "t": "Псевдофурункулёз у детей. Этиология, патогенез, клиника, классификация, диагностика и диф. диагностика", "kw": ["исакове", "разумовском", "псевдофурункулёза", "источники", "справочник", "красота", "медицина", "idoctor", "вопросах", "зачёта"]}, {"n": 158, "t": "Псевдофурункулёз у детей. Лечение и осложнение", "kw": ["справочник", "красота", "медицина", "idoctor", "связи", "хирургической", "тактикой", "исаков", "546--547", "флегмона"]}, {"n": 159, "t": "Парапроктит у детей. Этиология, патогенез и клиника", "kw": ["разумовский", "402--404", "исаков", "413--415", "626--627", "ключевые", "слова", "криптогландулярный", "абсцесс", "морганиевы"]}, {"n": 160, "t": "Парапроктит у детей. Классификация, диагностика и диф. диагностика", "kw": ["разумовский", "6--24", "404--407", "исаков", "415--418", "классификация", "составлена", "описаний", "единой", "таблицы"]}, {"n": 161, "t": "Парапроктит у детей. Лечение и осложнение", "kw": ["разумовский", "6--24", "402--408", "15--24", "исаков", "413--418", "626--630", "ключевые", "слова", "парапроктит"]}, {"n": 162, "t": "Язвенно-некротический энтероколит у детей. Этиология, патогенез и клиника", "kw": ["разумовский", "514--517", "исаков", "618--624", "ключевые", "слова", "ишемия", "недоношенные", "пневматоз", "стадии"]}, {"n": 163, "t": "Язвенно-некротический энтероколит у детей. Диагностика и диф. диагностика", "kw": ["разумовский", "515--520", "1--38", "исаков", "620--624", "7-20--7-22", "ключевые", "слова", "пневматоз", "воротной"]}, {"n": 164, "t": "Язвенно-некротический энтероколит у детей. Лечение и осложнение", "kw": ["разумовский", "518--524", "исаков", "624--625", "ключевые", "слова", "энтеральный", "покой", "декомпрессия", "деконтаминация"]}, {"n": 165, "t": "Виды наркоза у детей. Стадии и осложнение. Постреанимационная болезнь", "kw": ["исаков", "57--58", "59--72", "72--79", "интернет", "учебные", "материалы", "кафедр", "анестезиологии", "гомгму"]}, {"n": 166, "t": "Интенсивная терапия у детей. Показание, противопоказание и осложнение", "kw": ["исаков", "59--72", "противопоказания", "интенсивной", "терапии", "книге", "описаны", "общих", "принципов", "помечено"]}, {"n": 167, "t": "Инфузионная терапия у детей. Показание, противопоказание и осложнение", "kw": ["исаков", "62--71", "расчёты", "жидкости", "калия", "крови", "интернет", "клинические", "рекомендации", "союза"]}, {"n": 168, "t": "Острые отравления. Причины, клиника, лечение и осложнение", "kw": ["интернет", "клинические", "рекомендации", "скорой", "помощи", "острых", "отравлениях", "детей", "баранов", "багненко"]}, {"n": 169, "t": "Мочекаменная болезнь. Этиология и патогенез", "kw": ["разумовский", "722--725", "исаков", "529--530", "ключевые", "слова", "уролитиаз", "метаболические", "нарушения", "инфекция"]}, {"n": 170, "t": "Мочекаменная болезнь. Клиника и классификация", "kw": ["разумовский", "724--725", "исаков", "530--531", "отдельной", "классификации", "тяжести", "книгах", "привожу", "тексте"]}, {"n": 171, "t": "Мочекаменная болезнь. Диагностика и диф. диагностика", "kw": ["исаков", "531--532", "разумовский", "интернет", "клинические", "рекомендации", "мочекаменная", "болезнь", "детей", "педиатров"]}, {"n": 172, "t": "Мочекаменная болезнь. Профилактика, лечение и осложнение", "kw": ["разумовский", "722--727", "исаков", "529--533", "профилактика", "интернет", "метафилактика", "рекомендациям", "союза", "педиатров"]}, {"n": 173, "t": "Травмы органов грудной полости. Причины, классификация, клиника, диагностика и диф. диагностика", "kw": ["твоих", "книгах", "отдельной", "главы", "травму", "груди", "пневмоторакс", "исаков", "271--273", "травматические"]}, {"n": 174, "t": "Травмы органов грудной полости. Лечение и осложнение", "kw": ["исаков", "лечение", "пневмоторакса", "разумовский", "лапароскопии", "остальное", "perth", "children", "hospital", "клинический"]}, {"n": 175, "t": "Травмы органов брюшной полости. Причины, классификация и клиника", "kw": ["разумовский", "364--369", "исакове", "отдельного", "раздела", "травму", "живота", "только", "общее", "упоминание"]}, {"n": 176, "t": "Травмы органов брюшной полости. Диагностика и диф. диагностика", "kw": ["разумовский", "365--369", "интернет", "рекомендации", "обзоры", "детей", "children", "hospital", "colorado", "дифференциальная"]}, {"n": 177, "t": "Травмы органов брюшной полости. Лечение и осложнение", "kw": ["разумовский", "365--367", "интернет", "рекомендации", "обзоры", "неоперативному", "ведению", "печени", "селезёнки", "детей"]}, {"n": 178, "t": "Травмы почки у детей. Лечение и осложнение", "kw": ["разумовский", "708--710", "исакове", "раздела", "травму", "почки", "ключевые", "слова", "консервативное", "лечение"]}, {"n": 179, "t": "Травма почки у детей. Причины, классификация, клиника, диагностика и диф. диагностика", "kw": ["разумовский", "706--708", "дифференциальная", "диагностика", "составлена", "общим", "принципам", "книге", "отдельного", "раздела"]}, {"n": 180, "t": "Травма мочевого пузыря у детей. Причины, классификация, клиника, диагностика и диф. диагностика", "kw": ["разумовский", "713--714", "дифференциальная", "диагностика", "составлена", "общим", "принципам", "тексту", "книге", "отдельной"]}, {"n": 181, "t": "Травма мочевого пузыря у детей. Лечение и осложнение", "kw": ["разумовский", "714--715", "схема", "разрывов", "вопросе", "ключевые", "слова", "ушивание", "пузыря", "цистостомия"]}, {"n": 182, "t": "Травма уретры у детей. Причины, классификация, диагностика, лечение и осложнение", "kw": ["разумовский", "716--719", "интернет", "классификация", "голдмана", "goldman", "обзорам", "сроки", "отсроченной", "пластики"]}];
+
+  document.querySelectorAll('.exam-tab').forEach(tab => {
+    tab.onclick = () => {
+      document.querySelectorAll('.exam-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.exam-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+    };
+  });
+
+  function renderMcq() {
+    const list = document.getElementById('mcqList');
+    list.innerHTML = MCQS.map((m, i) => `
+      <div class="mcq-card" data-i="${i}">
+        <h4>${i+1}. ${m.q}</h4>
+        ${m.opts.map((o, j) => `
+          <label class="opt" data-j="${j}">
+            <input type="radio" name="mcq${i}" value="${j}" style="margin-right:8px"> ${o}
+          </label>`).join('')}
+      </div>`).join('');
+    list.querySelectorAll('.opt').forEach(opt => {
+      opt.onclick = () => {
+        const card = opt.closest('.mcq-card');
+        card.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        opt.querySelector('input').checked = true;
+      };
+    });
+  }
+  renderMcq();
+
+  document.getElementById('checkMcq').onclick = () => {
+    let correct = 0;
+    MCQS.forEach((m, i) => {
+      const card = document.querySelector(`.mcq-card[data-i="${i}"]`);
+      const selected = card.querySelector('input:checked');
+      card.querySelectorAll('.opt').forEach(o => {
+        o.classList.remove('correct', 'wrong');
+        const j = +o.dataset.j;
+        if (j === m.a) o.classList.add('correct');
+        if (selected && +selected.value === j && j !== m.a) o.classList.add('wrong');
+      });
+      if (selected && +selected.value === m.a) correct++;
+    });
+    const pct = Math.round(correct / MCQS.length * 100);
+    document.getElementById('mcqResult').innerHTML = `
+      <div class="score-box"><div>Результат тестов</div>
+      <div class="big">${correct} / ${MCQS.length}</div><div>${pct}%</div></div>`;
+  };
+
+  function pickOpen(n=5) {
+    const shuffled = [...BANK].sort(() => Math.random() - 0.5).slice(0, n);
+    document.getElementById('openList').innerHTML = shuffled.map((q, i) => `
+      <div class="open-card" data-n="${q.n}">
+        <h4>${i+1}. [№${q.n}] ${q.t}</h4>
+        <textarea class="answer" placeholder="Напишите ответ своими словами..."></textarea>
+        <div class="open-feedback" style="margin-top:8px;font-size:0.9rem;"></div>
+      </div>`).join('');
+  }
+  pickOpen();
+
+  function scoreAnswer(userText, kw) {
+    if (!userText || !userText.trim()) return 0;
+    const u = userText.toLowerCase();
+    let hits = 0;
+    (kw || []).forEach(k => { if (u.includes(String(k).toLowerCase())) hits++; });
+    const ratio = kw && kw.length ? hits / kw.length : 0;
+    if (ratio >= 0.5) return 1;
+    if (ratio >= 0.35) return 0.75;
+    if (ratio >= 0.2) return 0.5;
+    if (ratio >= 0.1) return 0.25;
+    const userWords = u.split(/\s+/).filter(w => w.length > 4);
+    const overlap = userWords.filter(w => (kw||[]).some(k => String(k).includes(w) || w.includes(String(k)))).length;
+    if (overlap >= 2) return 0.25;
+    return 0;
+  }
+
+  document.getElementById('checkOpen').onclick = () => {
+    let total = 0, max = 0;
+    document.querySelectorAll('#openList .open-card').forEach(card => {
+      const n = +card.dataset.n;
+      const q = BANK.find(x => x.n === n);
+      const text = card.querySelector('textarea').value;
+      const s = scoreAnswer(text, q.kw);
+      total += s; max += 1;
+      const fb = card.querySelector('.open-feedback');
+      const pct = Math.round(s * 100);
+      fb.innerHTML = s >= 0.5
+        ? `<span style="color:#16a34a">✓ Принято (~${pct}%)</span>`
+        : s > 0
+          ? `<span style="color:#ca8a04">~ Частично (~${pct}%). Добавьте ключевые термины.</span>`
+          : `<span style="color:#e11d48">✗ Мало совпадений. Смотрите материал №${n}.</span>`;
+    });
+    document.getElementById('openResult').innerHTML = `
+      <div class="score-box"><div>Практика</div>
+      <div class="big">${Math.round(total / max * 100)}%</div></div>`;
+  };
+
+  let examQs = [];
+  document.getElementById('startExam').onclick = () => {
+    examQs = [...BANK].sort(() => Math.random() - 0.5).slice(0, 4);
+    document.getElementById('examResult').innerHTML = '';
+    document.getElementById('examProgress').style.display = 'block';
+    document.getElementById('examProgress').firstElementChild.style.width = '0%';
+    document.getElementById('examArea').innerHTML = examQs.map((q, i) => `
+      <div class="open-card" data-i="${i}">
+        <h4>Вопрос ${i+1} из 4 (макс. 25 баллов)<br>
+        <span style="font-weight:500;color:var(--text-muted)">[№${q.n}] ${q.t}</span></h4>
+        <textarea class="answer" placeholder="Развёрнутый ответ..."></textarea>
+      </div>`).join('') + `<button class="btn btn-primary" id="submitExam">Сдать экзамен</button>`;
+    document.getElementById('submitExam').onclick = gradeExam;
+  };
+
+  function gradeExam() {
+    let sum = 0;
+    examQs.forEach((q, i) => {
+      const card = document.querySelector(`#examArea .open-card[data-i="${i}"]`);
+      const text = card.querySelector('textarea').value;
+      const ratio = scoreAnswer(text, q.kw);
+      const points = Math.round(ratio * 25);
+      sum += points;
+      card.innerHTML += `<div style="margin-top:10px;font-weight:700;color:var(--primary)">Баллы: ${points} / 25</div>`;
+    });
+    document.getElementById('examProgress').firstElementChild.style.width = sum + '%';
+    const mark = sum >= 85 ? 'Отлично' : sum >= 70 ? 'Хорошо' : sum >= 50 ? 'Удовлетворительно' : 'Нужно повторить';
+    document.getElementById('examResult').innerHTML = `
+      <div class="score-box"><div>Итог экзамена</div>
+      <div class="big">${sum} / 100</div><div>${mark}</div></div>
+      <p style="text-align:center;color:var(--text-muted);margin-top:8px;">
+        Баллы за совпадение ключевых терминов с материалом. Даже частичный ответ даёт баллы.</p>`;
+    document.getElementById('submitExam').disabled = true;
+  }
+  </script>
+</body>
+</html>
