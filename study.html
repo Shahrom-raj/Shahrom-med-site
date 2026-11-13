@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Личный помощник для работы с расписанием STUDY.TJ"><title>STUDY.TJ — Shahrom Rajabov</title><style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #f0f7f7;
+  --bg-card: #ffffff;
+  --text: #0f2c32;
+  --text-muted: #5a7178;
+  --primary: #0d7377;
+  --primary-hover: #0a5c5f;
+  --accent: #14b8a6;
+  --border: #d0e5e5;
+  --header-bg: rgba(255,255,255,0.9);
+  --shadow: 0 4px 24px rgba(13,115,119,0.08);
+  --radius: 14px;
+  --danger: #e11d48;
+}
+
+[data-theme="dark"] {
+  --bg: #0b1a1d;
+  --bg-card: #122529;
+  --text: #e6f2f2;
+  --text-muted: #8aa3a8;
+  --primary: #2dd4bf;
+  --primary-hover: #5eead4;
+  --accent: #14b8a6;
+  --border: #1e3a3f;
+  --header-bg: rgba(11,26,29,0.92);
+  --shadow: 0 4px 24px rgba(0,0,0,0.35);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.25s, color 0.25s;
+}
+a { text-decoration: none; color: inherit; transition: 0.2s; }
+.container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+/* Header */
+.header {
+  background: var(--header-bg);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  gap: 12px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+.logo-icon {
+  width: 42px; height: 42px;
+  background: linear-gradient(145deg, var(--primary), var(--accent));
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 1.3rem;
+  box-shadow: 0 4px 14px rgba(13,115,119,0.3);
+}
+.nav { display: flex; gap: 4px; flex-wrap: wrap; }
+.nav a {
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+.nav a:hover, .nav a.active {
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  color: var(--primary);
+}
+.header-actions { display: flex; align-items: center; gap: 8px; }
+.icon-btn {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  transition: 0.2s;
+}
+.icon-btn:hover { border-color: var(--primary); color: var(--primary); }
+.lang-btn {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.lang-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+.burger { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); }
+
+/* Hero */
+.hero {
+  background: linear-gradient(145deg, #0a2e36 0%, #0d7377 50%, #14b8a6 100%);
+  color: white;
+  padding: 64px 0 56px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.03em; }
+.hero .subtitle { font-size: 1.15rem; opacity: 0.95; font-weight: 500; }
+.hero .tagline { font-size: 0.98rem; opacity: 0.8; max-width: 460px; margin: 12px auto 0; }
+
+/* Sections */
+.section { padding: 48px 0; }
+.section-title {
+  font-size: 1.7rem; font-weight: 800; color: var(--text);
+  margin-bottom: 24px; letter-spacing: -0.02em;
+  position: relative; padding-bottom: 10px;
+}
+.section-title::after {
+  content: ''; position: absolute; left: 0; bottom: 0;
+  width: 44px; height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 4px;
+}
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 24px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  height: 100%;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(13,115,119,0.12); }
+.card h3 { color: var(--primary); margin-bottom: 8px; font-size: 1.15rem; font-weight: 700; }
+.card p { color: var(--text-muted); font-size: 0.93rem; }
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+
+/* About */
+.about-content { display: grid; grid-template-columns: 1fr 1.5fr; gap: 36px; align-items: start; }
+.about-photo {
+  background: linear-gradient(145deg, color-mix(in srgb, var(--primary) 20%, var(--bg)), color-mix(in srgb, var(--accent) 25%, var(--bg)));
+  border-radius: var(--radius); aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 5rem; border: 2px solid var(--border);
+}
+.about-text p { margin-bottom: 12px; color: var(--text-muted); }
+.about-text strong { color: var(--text); }
+.info-list { list-style: none; margin-top: 18px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border); overflow: hidden; }
+.info-list li { padding: 11px 16px; border-bottom: 1px solid var(--border); display: flex; gap: 12px; }
+.info-list li:last-child { border-bottom: none; }
+.info-list .label { font-weight: 700; color: var(--primary); min-width: 90px; font-size: 0.88rem; }
+
+/* Material hero + book viewer */
+.material-hero {
+  background: linear-gradient(145deg, #0a2e36, #0d7377 60%, #14b8a6);
+  color: white; padding: 28px; border-radius: var(--radius); margin-bottom: 24px;
+}
+.material-hero h3 { color: white; font-size: 1.35rem; font-weight: 800; margin-bottom: 8px; }
+.material-hero p { opacity: 0.92; margin-bottom: 18px; max-width: 520px; }
+.btn-read, .btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: white; color: #0a2e36;
+  padding: 12px 22px; border-radius: 999px;
+  font-weight: 700; font-size: 0.95rem; border: none; cursor: pointer;
+  transition: 0.2s; font-family: inherit;
+}
+.btn-read:hover, .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+}
+
+/* Embedded book section */
+.book-viewer {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow);
+}
+.book-viewer-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; background: var(--bg);
+  border-bottom: 1px solid var(--border); font-weight: 700;
+}
+.book-frame {
+  width: 100%; height: 70vh; min-height: 420px; border: none;
+  background: #e8eef0;
+}
+
+/* Search & questions */
+.search-box { margin-bottom: 16px; }
+.search-box input {
+  width: 100%; max-width: 480px; padding: 12px 16px;
+  border: 1.5px solid var(--border); border-radius: 999px;
+  font-size: 1rem; background: var(--bg-card); color: var(--text);
+  font-family: inherit; transition: 0.2s;
+}
+.search-box input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent); }
+.stats { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; font-size: 0.88rem; color: var(--text-muted); }
+.stats strong { color: var(--primary); }
+
+.q-list { list-style: none; }
+.q-item {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; margin-bottom: 8px; overflow: hidden; transition: 0.15s;
+}
+.q-item:hover { box-shadow: var(--shadow); }
+.q-header {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 13px 15px; cursor: pointer; user-select: none;
+}
+.q-num {
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  color: var(--primary); font-weight: 800; font-size: 0.78rem;
+  min-width: 32px; height: 26px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.q-title { flex: 1; font-weight: 600; font-size: 0.94rem; line-height: 1.4; }
+.q-toggle { color: var(--text-muted); font-size: 0.85rem; transition: 0.2s; }
+.q-item.open .q-toggle { transform: rotate(180deg); }
+.q-body {
+  display: none; padding: 12px 16px 16px;
+  border-top: 1px solid var(--border);
+  max-height: 65vh; overflow-y: auto;
+  font-size: 0.92rem; line-height: 1.55; background: color-mix(in srgb, var(--primary) 4%, var(--bg));
+}
+.q-item.open .q-body { display: block; }
+.q-body p { margin-bottom: 8px; }
+.q-body h4 { margin: 12px 0 6px; color: var(--primary); }
+
+.note {
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  border-left: 4px solid var(--primary);
+  padding: 12px 16px; border-radius: 0 10px 10px 0;
+  margin-bottom: 18px; font-size: 0.9rem; color: var(--text-muted);
+}
+
+.item-card { display: flex; gap: 14px; align-items: flex-start; }
+.item-icon {
+  width: 48px; height: 48px;
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; flex-shrink: 0;
+}
+.badge {
+  display: inline-block;
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  color: var(--primary); font-size: 0.72rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 20px; margin-top: 6px;
+}
+
+/* Contact */
+.contact-form {
+  background: var(--bg-card); padding: 28px; border-radius: var(--radius);
+  border: 1px solid var(--border); box-shadow: var(--shadow); max-width: 520px;
+}
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 0.9rem; }
+.form-group input, .form-group textarea {
+  width: 100%; padding: 11px 14px; border: 1.5px solid var(--border);
+  border-radius: 10px; font-size: 1rem; font-family: inherit;
+  background: var(--bg); color: var(--text); transition: 0.2s;
+}
+.form-group input:focus, .form-group textarea:focus {
+  outline: none; border-color: var(--primary);
+}
+.form-group textarea { min-height: 120px; resize: vertical; }
+
+/* Footer */
+.footer {
+  background: #0a2e36; color: rgba(255,255,255,0.8);
+  padding: 24px 0; margin-top: auto; text-align: center; font-size: 0.88rem;
+}
+
+/* AI Widget */
+.ai-chat-btn {
+  position: fixed; bottom: 22px; right: 22px;
+  width: 60px; height: 60px; border-radius: 50%;
+  background: linear-gradient(145deg, var(--primary), var(--accent));
+  color: white; border: none;
+  box-shadow: 0 8px 28px rgba(13,115,119,0.4);
+  cursor: pointer; z-index: 1500;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.7rem; transition: 0.2s;
+}
+.ai-chat-btn:hover { transform: scale(1.08); }
+.ai-chat-btn.open { background: #64748b; }
+.ai-chat-panel {
+  position: fixed; bottom: 94px; right: 22px;
+  width: 380px; max-width: calc(100vw - 24px);
+  height: 520px; max-height: calc(100vh - 120px);
+  background: var(--bg-card); border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.2);
+  z-index: 1499; display: none; flex-direction: column;
+  overflow: hidden; border: 1px solid var(--border);
+}
+.ai-chat-panel.open { display: flex; }
+.ai-chat-header {
+  background: linear-gradient(145deg, #0a2e36, var(--primary));
+  color: white; padding: 13px 15px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-weight: 700;
+}
+.ai-chat-header button {
+  background: rgba(255,255,255,0.18); border: none; color: white;
+  width: 32px; height: 32px; border-radius: 8px; cursor: pointer; font-size: 1.1rem;
+}
+.ai-chat-body { flex: 1; overflow-y: auto; padding: 14px; background: var(--bg); }
+.ai-chat-disclaimer {
+  padding: 8px 12px; font-size: 0.7rem; color: var(--text-muted);
+  background: var(--bg-card); border-top: 1px solid var(--border); text-align: center;
+}
+
+/* PDF Modal */
+.pdf-modal {
+  display: none; position: fixed; inset: 0;
+  background: rgba(10,46,54,0.8); z-index: 2000;
+  align-items: center; justify-content: center; padding: 12px;
+  backdrop-filter: blur(6px);
+}
+.pdf-modal.open { display: flex; }
+.pdf-modal-inner {
+  background: var(--bg-card); width: 100%; max-width: 980px;
+  height: 92vh; border-radius: 14px; overflow: hidden;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+}
+.pdf-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 11px 16px; background: #0a2e36; color: white; font-weight: 700;
+}
+.pdf-modal-header button {
+  background: rgba(255,255,255,0.15); border: none; color: white;
+  width: 34px; height: 34px; border-radius: 8px; cursor: pointer; font-size: 1.15rem;
+}
+.pdf-modal-body { flex: 1; background: #e8eef0; }
+.pdf-modal-body iframe { width: 100%; height: 100%; border: none; }
+
+@media (max-width: 768px) {
+  .burger { display: block; }
+  .nav {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--bg-card); flex-direction: column; padding: 12px;
+    box-shadow: var(--shadow); border-top: 1px solid var(--border);
+  }
+  .nav.open { display: flex; }
+  .nav a { padding: 12px 14px; border-radius: 10px; }
+  .hero h1 { font-size: 1.85rem; }
+  .about-content { grid-template-columns: 1fr; }
+  .about-photo { max-width: 180px; margin: 0 auto; }
+  .ai-chat-panel { right: 10px; left: 10px; width: auto; bottom: 88px; }
+  .ai-chat-btn { right: 14px; bottom: 14px; }
+  .book-frame { height: 55vh; }
+}
+
+.study-hero{background:linear-gradient(145deg,#0a2e36 0%,#0d7377 55%,#14b8a6 100%);color:#fff;padding:38px 0;text-align:center}
+.study-hero h1{font-size:2rem;font-weight:800;margin-bottom:8px}
+.study-hero p{opacity:.9}
+.study-layout{display:grid;grid-template-columns:1fr;gap:22px}
+.study-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.study-card h2{font-size:1.25rem;color:var(--primary);margin-bottom:14px}
+.study-months{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin:14px 0}
+.study-month{padding:10px 6px;border:1px solid var(--border);border-radius:10px;background:var(--bg-card);color:var(--text);font-weight:600;cursor:pointer}
+.study-month.active{background:var(--primary);border-color:var(--primary);color:white}
+.study-actions{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.study-btn{display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border:0;border-radius:9px;background:var(--primary);color:white;font-weight:700;cursor:pointer}
+.study-btn.secondary{background:var(--bg-card);color:var(--primary);border:1px solid var(--border)}
+.study-frame-wrap{height:72vh;min-height:460px;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg)}
+.study-frame-wrap iframe{width:100%;height:100%;border:0;background:white}
+.study-note{font-size:.88rem;color:var(--text-muted);margin-top:10px;line-height:1.55}
+.study-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.study-form label{display:block;font-weight:600;font-size:.9rem;margin-bottom:6px}
+.study-form input,.study-topic{width:100%;padding:12px;border:1px solid var(--border);border-radius:9px;background:var(--bg-card);color:var(--text);font:inherit}
+.study-result{margin-top:14px;padding:14px;border-radius:10px;background:color-mix(in srgb,var(--primary) 10%,var(--bg-card));border:1px solid var(--border);line-height:1.6}
+.study-ai-row{display:flex;gap:10px;flex-wrap:wrap}
+.study-ai-row input{flex:1;min-width:220px}
+@media(max-width:650px){.study-months{grid-template-columns:repeat(3,minmax(0,1fr))}.study-frame-wrap{height:68vh;min-height:380px}.study-form{grid-template-columns:1fr}.study-hero h1{font-size:1.65rem}}
+</style></head>
+<body>
+<header class="header"><div class="container header-inner">
+<a href="index.html" class="logo"><div class="logo-icon">⚕</div><span>Shahrom Rajabov</span></a>
+<button class="burger" id="burger">☰</button>
+<nav class="nav" id="nav">
+<a href="index.html">О себе</a><a href="materials.html">Материалы</a><a href="exam.html">Экзамен</a><a href="books.html">Книги</a><a href="study.html" class="active">STUDY.TJ</a><a href="contact.html">Обратная связь</a>
+</nav><div class="header-actions"><button class="icon-btn" id="themeBtn" title="Сменить тему">🌙</button></div>
+</div></header>
+<section class="study-hero"><div class="container"><h1>STUDY.TJ — студенческий кабинет</h1><p>Расписание, учёт НБ и медицинский ИИ-помощник</p></div></section>
+<main class="section"><div class="container study-layout">
+<section class="study-card"><h2>📅 Расписание занятий</h2><p class="study-note">Выбери месяц. Ссылка откроется в окне ниже, если официальный портал разрешает встраивание.</p>
+<div class="study-months" id="studyMonths">
+<button class="study-month" data-month="9">Сентябрь</button><button class="study-month" data-month="10">Октябрь</button><button class="study-month active" data-month="11">Ноябрь</button><button class="study-month" data-month="12">Декабрь</button><button class="study-month" data-month="1">Январь</button><button class="study-month" data-month="2">Февраль</button><button class="study-month" data-month="3">Март</button><button class="study-month" data-month="4">Апрель</button><button class="study-month" data-month="5">Май</button>
+</div><div class="study-actions"><button class="study-btn" id="reloadSchedule">↻ Обновить расписание</button><a class="study-btn secondary" id="openOfficial" href="https://study.tj/modules/schedule/?month=11" target="_blank" rel="noopener">Открыть отдельно ↗</a></div>
+<div class="study-frame-wrap"><iframe id="studyFrame" src="https://study.tj/modules/schedule/?month=11" title="Официальное расписание STUDY.TJ" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="clipboard-read; clipboard-write"></iframe></div>
+<p class="study-note"><strong>Если окно пустое или показывает ошибку:</strong> возможно, STUDY.TJ запрещает встраивание или требует входа в отдельной вкладке. Нажми «Открыть отдельно», войди в свой аккаунт, затем вернись сюда. Эта страница не получает пароль и не читает данные портала.</p>
+</section>
+<section class="study-card"><h2>🧮 Учёт НБ и посещаемости</h2><p class="study-note">Пока вводи значения вручную: сайт STUDY.TJ не подключён к автоматическому чтению журнала. Данные сохраняются в этом браузере отдельно для каждого месяца.</p>
+<div class="study-form"><div><label for="nbTotal">Всего занятий</label><input id="nbTotal" type="number" min="0" step="1" placeholder="Например, 24"></div><div><label for="nbMissed">НБ (пропуски)</label><input id="nbMissed" type="number" min="0" step="1" placeholder="Например, 3"></div></div>
+<div class="study-actions"><button class="study-btn" id="calcNB">Рассчитать и сохранить</button><button class="study-btn secondary" id="clearNB">Очистить месяц</button></div><div class="study-result" id="nbResult" aria-live="polite">Выбери месяц и введи количество занятий и пропусков.</div>
+</section>
+<section class="study-card"><h2>🤖 Study AI — медицинский помощник</h2><p class="study-note">Введи тему занятия. Откроется ИИ с готовым запросом на краткий учебный ответ. Для автоматического ответа прямо на сайте позже подключим серверный API.</p>
+<div class="study-ai-row"><input class="study-topic" id="studyTopic" type="text" placeholder="Например: эмпиема плевры"><button class="study-btn" id="askAI">Объяснить тему</button></div>
+<p class="study-note">Формат ответа: определение, этиология, классификация, клиника, диагностика и лечение — кратко и понятно для экзамена.</p>
+</section>
+</div></main>
+<footer class="footer"><div class="container"><p>© 2025–2026 Shahrom Rajabov · Medical student</p></div></footer>
+<script>
+const months = {'9':'Сентябрь','10':'Октябрь','11':'Ноябрь','12':'Декабрь','1':'Январь','2':'Февраль','3':'Март','4':'Апрель','5':'Май'};
+let selectedMonth = '11';
+const scheduleUrl = m => 'https://study.tj/modules/schedule/?month=' + encodeURIComponent(m);
+function selectMonth(month) {
+  selectedMonth = month;
+  document.querySelectorAll('.study-month').forEach(b => b.classList.toggle('active', b.dataset.month === month));
+  document.getElementById('studyFrame').src = scheduleUrl(month);
+  document.getElementById('openOfficial').href = scheduleUrl(month);
+  loadNB();
+}
+document.querySelectorAll('.study-month').forEach(b => b.addEventListener('click', () => selectMonth(b.dataset.month)));
+document.getElementById('reloadSchedule').addEventListener('click', () => {
+  const frame = document.getElementById('studyFrame');
+  frame.src = scheduleUrl(selectedMonth);
+});
+function storageKey() { return 'studyNB_' + selectedMonth; }
+function loadNB() {
+  const saved = JSON.parse(localStorage.getItem(storageKey()) || 'null');
+  document.getElementById('nbTotal').value = saved ? saved.total : '';
+  document.getElementById('nbMissed').value = saved ? saved.missed : '';
+  if (saved) showNB(saved.total, saved.missed); else document.getElementById('nbResult').textContent = 'Для ' + months[selectedMonth] + ': введи количество занятий и НБ.';
+}
+function showNB(total, missed) {
+  const attendance = total === 0 ? 0 : ((total - missed) / total * 100);
+  document.getElementById('nbResult').innerHTML = '<strong>' + months[selectedMonth] + '</strong><br>Всего занятий: ' + total + '<br>НБ: ' + missed + '<br>Посещаемость: <strong>' + attendance.toFixed(1) + '%</strong>';
+}
+document.getElementById('calcNB').addEventListener('click', () => {
+  const total = Number(document.getElementById('nbTotal').value);
+  const missed = Number(document.getElementById('nbMissed').value);
+  if (!Number.isInteger(total) || !Number.isInteger(missed) || total < 0 || missed < 0 || missed > total || document.getElementById('nbTotal').value === '' || document.getElementById('nbMissed').value === '') {
+    document.getElementById('nbResult').textContent = 'Проверь данные: НБ не может быть больше общего количества занятий.'; return;
+  }
+  localStorage.setItem(storageKey(), JSON.stringify({total, missed})); showNB(total, missed);
+});
+document.getElementById('clearNB').addEventListener('click', () => { localStorage.removeItem(storageKey()); document.getElementById('nbTotal').value=''; document.getElementById('nbMissed').value=''; document.getElementById('nbResult').textContent='Данные за ' + months[selectedMonth] + ' очищены.'; });
+document.getElementById('askAI').addEventListener('click', () => {
+  const topic = document.getElementById('studyTopic').value.trim();
+  if (!topic) { alert('Сначала введи название темы.'); return; }
+  const prompt = 'Объясни медицинскую тему «' + topic + '» кратко и понятно для студента медицинского вуза. Структура: определение, этиология, патогенез, классификация, клиника, диагностика, лечение. Не выдумывай факты; отмечай спорные моменты.';
+  window.open('https://chatgpt.com/?q=' + encodeURIComponent(prompt), '_blank', 'noopener');
+});
+const themeBtn = document.getElementById('themeBtn');
+const savedTheme = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', savedTheme); themeBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+themeBtn.addEventListener('click', () => { const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; document.documentElement.setAttribute('data-theme', next); localStorage.setItem('theme', next); themeBtn.textContent = next === 'dark' ? '☀️' : '🌙'; });
+const burger = document.getElementById('burger'), nav = document.getElementById('nav');
+if (burger && nav) burger.addEventListener('click', () => { nav.classList.toggle('open'); burger.textContent = nav.classList.contains('open') ? '✕' : '☰'; });
+loadNB();
+</script>
+</body></html>
