@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Клинические навыки — Shahrom Rajabov</title>
+  <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #f0f7f7;
+  --bg-card: #ffffff;
+  --text: #0f2c32;
+  --text-muted: #5a7178;
+  --primary: #0d7377;
+  --primary-hover: #0a5c5f;
+  --accent: #14b8a6;
+  --border: #d0e5e5;
+  --header-bg: rgba(255,255,255,0.9);
+  --shadow: 0 4px 24px rgba(13,115,119,0.08);
+  --radius: 14px;
+  --danger: #e11d48;
+}
+
+[data-theme="dark"] {
+  --bg: #0b1a1d;
+  --bg-card: #122529;
+  --text: #e6f2f2;
+  --text-muted: #8aa3a8;
+  --primary: #2dd4bf;
+  --primary-hover: #5eead4;
+  --accent: #14b8a6;
+  --border: #1e3a3f;
+  --header-bg: rgba(11,26,29,0.92);
+  --shadow: 0 4px 24px rgba(0,0,0,0.35);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.25s, color 0.25s;
+}
+a { text-decoration: none; color: inherit; transition: 0.2s; }
+.container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+/* Header */
+.header {
+  background: var(--header-bg);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  gap: 12px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+.logo-icon {
+  width: 42px; height: 42px;
+  background: linear-gradient(145deg, var(--primary), var(--accent));
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 1.3rem;
+  box-shadow: 0 4px 14px rgba(13,115,119,0.3);
+}
+.nav { display: flex; gap: 4px; flex-wrap: wrap; }
+.nav a {
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+.nav a:hover, .nav a.active {
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  color: var(--primary);
+}
+.header-actions { display: flex; align-items: center; gap: 8px; }
+.icon-btn {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  transition: 0.2s;
+}
+.icon-btn:hover { border-color: var(--primary); color: var(--primary); }
+.lang-btn {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.lang-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+.burger { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); }
+
+/* Hero */
+.hero {
+  background: linear-gradient(145deg, #0a2e36 0%, #0d7377 50%, #14b8a6 100%);
+  color: white;
+  padding: 64px 0 56px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.03em; }
+.hero .subtitle { font-size: 1.15rem; opacity: 0.95; font-weight: 500; }
+.hero .tagline { font-size: 0.98rem; opacity: 0.8; max-width: 460px; margin: 12px auto 0; }
+
+/* Sections */
+.section { padding: 48px 0; }
+.section-title {
+  font-size: 1.7rem; font-weight: 800; color: var(--text);
+  margin-bottom: 24px; letter-spacing: -0.02em;
+  position: relative; padding-bottom: 10px;
+}
+.section-title::after {
+  content: ''; position: absolute; left: 0; bottom: 0;
+  width: 44px; height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 4px;
+}
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 24px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  height: 100%;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(13,115,119,0.12); }
+.card h3 { color: var(--primary); margin-bottom: 8px; font-size: 1.15rem; font-weight: 700; }
+.card p { color: var(--text-muted); font-size: 0.93rem; }
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+
+/* About */
+.about-content { display: grid; grid-template-columns: 1fr 1.5fr; gap: 36px; align-items: start; }
+.about-photo {
+  background: linear-gradient(145deg, color-mix(in srgb, var(--primary) 20%, var(--bg)), color-mix(in srgb, var(--accent) 25%, var(--bg)));
+  border-radius: var(--radius); aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 5rem; border: 2px solid var(--border);
+}
+.about-text p { margin-bottom: 12px; color: var(--text-muted); }
+.about-text strong { color: var(--text); }
+.info-list { list-style: none; margin-top: 18px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border); overflow: hidden; }
+.info-list li { padding: 11px 16px; border-bottom: 1px solid var(--border); display: flex; gap: 12px; }
+.info-list li:last-child { border-bottom: none; }
+.info-list .label { font-weight: 700; color: var(--primary); min-width: 90px; font-size: 0.88rem; }
+
+/* Material hero + book viewer */
+.material-hero {
+  background: linear-gradient(145deg, #0a2e36, #0d7377 60%, #14b8a6);
+  color: white; padding: 28px; border-radius: var(--radius); margin-bottom: 24px;
+}
+.material-hero h3 { color: white; font-size: 1.35rem; font-weight: 800; margin-bottom: 8px; }
+.material-hero p { opacity: 0.92; margin-bottom: 18px; max-width: 520px; }
+.btn-read, .btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: white; color: #0a2e36;
+  padding: 12px 22px; border-radius: 999px;
+  font-weight: 700; font-size: 0.95rem; border: none; cursor: pointer;
+  transition: 0.2s; font-family: inherit;
+}
+.btn-read:hover, .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+}
+
+/* Embedded book section */
+.book-viewer {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow);
+}
+.book-viewer-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; background: var(--bg);
+  border-bottom: 1px solid var(--border); font-weight: 700;
+}
+.book-frame {
+  width: 100%; height: 70vh; min-height: 420px; border: none;
+  background: #e8eef0;
+}
+
+/* Search & questions */
+.search-box { margin-bottom: 16px; }
+.search-box input {
+  width: 100%; max-width: 480px; padding: 12px 16px;
+  border: 1.5px solid var(--border); border-radius: 999px;
+  font-size: 1rem; background: var(--bg-card); color: var(--text);
+  font-family: inherit; transition: 0.2s;
+}
+.search-box input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent); }
+.stats { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; font-size: 0.88rem; color: var(--text-muted); }
+.stats strong { color: var(--primary); }
+
+.q-list { list-style: none; }
+.q-item {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; margin-bottom: 8px; overflow: hidden; transition: 0.15s;
+}
+.q-item:hover { box-shadow: var(--shadow); }
+.q-header {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 13px 15px; cursor: pointer; user-select: none;
+}
+.q-num {
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  color: var(--primary); font-weight: 800; font-size: 0.78rem;
+  min-width: 32px; height: 26px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.q-title { flex: 1; font-weight: 600; font-size: 0.94rem; line-height: 1.4; }
+.q-toggle { color: var(--text-muted); font-size: 0.85rem; transition: 0.2s; }
+.q-item.open .q-toggle { transform: rotate(180deg); }
+.q-body {
+  display: none; padding: 12px 16px 16px;
+  border-top: 1px solid var(--border);
+  max-height: 65vh; overflow-y: auto;
+  font-size: 0.92rem; line-height: 1.55; background: color-mix(in srgb, var(--primary) 4%, var(--bg));
+}
+.q-item.open .q-body { display: block; }
+.q-body p { margin-bottom: 8px; }
+.q-body h4 { margin: 12px 0 6px; color: var(--primary); }
+
+.note {
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  border-left: 4px solid var(--primary);
+  padding: 12px 16px; border-radius: 0 10px 10px 0;
+  margin-bottom: 18px; font-size: 0.9rem; color: var(--text-muted);
+}
+
+.item-card { display: flex; gap: 14px; align-items: flex-start; }
+.item-icon {
+  width: 48px; height: 48px;
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; flex-shrink: 0;
+}
+.badge {
+  display: inline-block;
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  color: var(--primary); font-size: 0.72rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 20px; margin-top: 6px;
+}
+
+/* Contact */
+.contact-form {
+  background: var(--bg-card); padding: 28px; border-radius: var(--radius);
+  border: 1px solid var(--border); box-shadow: var(--shadow); max-width: 520px;
+}
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 0.9rem; }
+.form-group input, .form-group textarea {
+  width: 100%; padding: 11px 14px; border: 1.5px solid var(--border);
+  border-radius: 10px; font-size: 1rem; font-family: inherit;
+  background: var(--bg); color: var(--text); transition: 0.2s;
+}
+.form-group input:focus, .form-group textarea:focus {
+  outline: none; border-color: var(--primary);
+}
+.form-group textarea { min-height: 120px; resize: vertical; }
+
+/* Footer */
+.footer {
+  background: #0a2e36; color: rgba(255,255,255,0.8);
+  padding: 24px 0; margin-top: auto; text-align: center; font-size: 0.88rem;
+}
+
+/* AI Widget */
+.ai-chat-btn {
+  position: fixed; bottom: 22px; right: 22px;
+  width: 60px; height: 60px; border-radius: 50%;
+  background: linear-gradient(145deg, var(--primary), var(--accent));
+  color: white; border: none;
+  box-shadow: 0 8px 28px rgba(13,115,119,0.4);
+  cursor: pointer; z-index: 1500;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.7rem; transition: 0.2s;
+}
+.ai-chat-btn:hover { transform: scale(1.08); }
+.ai-chat-btn.open { background: #64748b; }
+.ai-chat-panel {
+  position: fixed; bottom: 94px; right: 22px;
+  width: 380px; max-width: calc(100vw - 24px);
+  height: 520px; max-height: calc(100vh - 120px);
+  background: var(--bg-card); border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.2);
+  z-index: 1499; display: none; flex-direction: column;
+  overflow: hidden; border: 1px solid var(--border);
+}
+.ai-chat-panel.open { display: flex; }
+.ai-chat-header {
+  background: linear-gradient(145deg, #0a2e36, var(--primary));
+  color: white; padding: 13px 15px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-weight: 700;
+}
+.ai-chat-header button {
+  background: rgba(255,255,255,0.18); border: none; color: white;
+  width: 32px; height: 32px; border-radius: 8px; cursor: pointer; font-size: 1.1rem;
+}
+.ai-chat-body { flex: 1; overflow-y: auto; padding: 14px; background: var(--bg); }
+.ai-chat-disclaimer {
+  padding: 8px 12px; font-size: 0.7rem; color: var(--text-muted);
+  background: var(--bg-card); border-top: 1px solid var(--border); text-align: center;
+}
+
+/* PDF Modal */
+.pdf-modal {
+  display: none; position: fixed; inset: 0;
+  background: rgba(10,46,54,0.8); z-index: 2000;
+  align-items: center; justify-content: center; padding: 12px;
+  backdrop-filter: blur(6px);
+}
+.pdf-modal.open { display: flex; }
+.pdf-modal-inner {
+  background: var(--bg-card); width: 100%; max-width: 980px;
+  height: 92vh; border-radius: 14px; overflow: hidden;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+}
+.pdf-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 11px 16px; background: #0a2e36; color: white; font-weight: 700;
+}
+.pdf-modal-header button {
+  background: rgba(255,255,255,0.15); border: none; color: white;
+  width: 34px; height: 34px; border-radius: 8px; cursor: pointer; font-size: 1.15rem;
+}
+.pdf-modal-body { flex: 1; background: #e8eef0; }
+.pdf-modal-body iframe { width: 100%; height: 100%; border: none; }
+
+@media (max-width: 768px) {
+  .burger { display: block; }
+  .nav {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--bg-card); flex-direction: column; padding: 12px;
+    box-shadow: var(--shadow); border-top: 1px solid var(--border);
+  }
+  .nav.open { display: flex; }
+  .nav a { padding: 12px 14px; border-radius: 10px; }
+  .hero h1 { font-size: 1.85rem; }
+  .about-content { grid-template-columns: 1fr; }
+  .about-photo { max-width: 180px; margin: 0 auto; }
+  .ai-chat-panel { right: 10px; left: 10px; width: auto; bottom: 88px; }
+  .ai-chat-btn { right: 14px; bottom: 14px; }
+  .book-frame { height: 55vh; }
+}
+
+
+.clin-nav { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+.clin-tab {
+  padding:10px 16px; border-radius:999px; border:1.5px solid var(--border);
+  background:var(--bg-card); font-weight:600; cursor:pointer; font-size:0.88rem; color:var(--text);
+}
+.clin-tab.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+.case-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; }
+.case-card {
+  background:var(--bg-card); border:1px solid var(--border); border-radius:14px;
+  padding:18px; cursor:pointer; transition:0.2s;
+}
+.case-card:hover { border-color:var(--primary); transform:translateY(-3px); box-shadow:var(--shadow); }
+.case-card h3 { color:var(--primary); margin-bottom:6px; font-size:1.05rem; }
+.case-card p { color:var(--text-muted); font-size:0.88rem; }
+.case-card .tag {
+  display:inline-block; margin-top:10px; font-size:0.72rem; font-weight:700;
+  padding:3px 10px; border-radius:20px;
+  background:color-mix(in srgb, var(--primary) 15%, transparent); color:var(--primary);
+}
+.sim-wrap { display:none; }
+.sim-wrap.open { display:block; }
+.sim-header {
+  display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:16px;
+}
+.step-bar {
+  display:flex; flex-wrap:wrap; gap:6px; margin-bottom:18px;
+}
+.step-pill {
+  padding:7px 12px; border-radius:8px; font-size:0.8rem; font-weight:600;
+  background:var(--bg); border:1px solid var(--border); color:var(--text-muted);
+}
+.step-pill.done { background:color-mix(in srgb, #16a34a 20%, transparent); color:#16a34a; border-color:#16a34a; }
+.step-pill.current { background:var(--primary); color:#fff; border-color:var(--primary); }
+.sim-panel {
+  background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:20px;
+}
+.choice {
+  display:block; width:100%; text-align:left; padding:12px 14px; margin:8px 0;
+  border-radius:10px; border:1.5px solid var(--border); background:var(--bg);
+  color:var(--text); cursor:pointer; font-size:0.92rem; transition:0.15s;
+}
+.choice:hover { border-color:var(--primary); }
+.choice.selected { border-color:var(--primary); background:color-mix(in srgb, var(--primary) 12%, transparent); }
+.choice.correct { border-color:#16a34a; background:rgba(22,163,74,0.12); }
+.choice.wrong { border-color:#e11d48; background:rgba(225,29,72,0.1); }
+.patient-box {
+  background:linear-gradient(145deg,#0a2e36,#0d7377); color:#fff;
+  border-radius:14px; padding:16px 18px; margin-bottom:16px;
+}
+.patient-box .label { opacity:0.8; font-size:0.8rem; }
+.feedback {
+  margin-top:12px; padding:12px; border-radius:10px; font-size:0.9rem;
+  background:color-mix(in srgb, var(--primary) 10%, transparent);
+  border-left:4px solid var(--primary);
+}
+
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo"><div class="logo-icon">⚕</div><span>Shahrom Rajabov</span></a>
+      <button class="burger" id="burger">☰</button>
+      <nav class="nav" id="nav">
+        <a href="index.html">О себе</a>
+        <a href="materials.html">Материалы</a>
+        <a href="clinical.html" class="active">Клиника</a>
+        <a href="exam.html">Экзамен</a>
+        <a href="tests.html">Тесты</a>
+        <a href="schedule.html">Расписание</a>
+        <a href="books.html">Книги</a>
+        <a href="contact.html">Связь</a>
+      </nav>
+      <div class="header-actions">
+        <button class="lang-btn active" data-lang="ru">RU</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="icon-btn" id="themeBtn">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Клинические навыки</h2>
+      <div class="note">
+        Интерактивные кейсы в стиле клинического тренажёра: <b>жалобы → осмотр → диагноз → лечение</b>.
+        Это учебный симулятор на сайте (не 3D Dimedus). Выбирайте ответы по шагам и получайте разбор.
+      </div>
+
+      <div class="clin-nav" id="clinNav">
+        <button class="clin-tab active" data-cat="therapy">Терапия</button>
+        <button class="clin-tab" data-cat="surgery">Хирургия</button>
+        <button class="clin-tab" data-cat="pedsurg">Детская хирургия</button>
+      </div>
+
+      <div id="caseList" class="case-grid"></div>
+      <div id="simArea" class="sim-wrap"></div>
+    </div>
+  </section>
+
+  <footer class="footer"><div class="container"><p>© 2025–2026 Shahrom Rajabov · Учебный симулятор</p></div></footer>
+  <script>// Theme + Language + AI + PDF
+const i18n = {
+  ru: {
+    about: "О себе", materials: "Материалы", books: "Книги", contact: "Обратная связь",
+    heroTitle: "Раджабов Шахром", heroSub: "Студент • Будущий врач",
+    heroTag: "Путь в медицину начинается с знаний, дисциплины и желания помогать людям",
+    aboutTitle: "О себе",
+    aboutP1: "Здравствуйте! Меня зовут Раджабов Шахром. Я студент медицинского университета, который стремится стать квалифицированным и внимательным врачом.",
+    aboutP2: "Медицина для меня — это не просто профессия, а призвание. Я верю, что хороший врач должен сочетать глубокие знания, эмпатию и постоянное стремление к развитию.",
+    status: "Статус", statusVal: "Студент медицинского вуза",
+    goal: "Цель", goalVal: "Стать практикующим врачом",
+    interests: "Интересы", interestsVal: "Клиническая медицина, анатомия, терапия",
+    matTitle: "Материалы для экзамена",
+    matHero: "Детская хирургия — вопросы 1–182",
+    matDesc: "Основной учебный материал. Читайте учебник прямо на сайте и ищите ответы по вопросам.",
+    openBook: "Открыть учебник",
+    searchPh: "Поиск по вопросам (атрезия, травма, пилоростеноз...)",
+    totalQ: "Всего вопросов",
+    booksTitle: "Рекомендуемые книги",
+    contactTitle: "Обратная связь",
+    send: "Отправить",
+    aiTitle: "ИИ-помощник",
+    aiLocal: "Поиск по материалам сайта",
+    aiWeb: "Спросить общий медицинский ИИ",
+    aiHint: "Введите тему или вопрос — найду в материалах. Для других медицинских вопросов откройте ChatGPT / Perplexity."
+  },
+  en: {
+    about: "About", materials: "Materials", books: "Books", contact: "Contact",
+    heroTitle: "Shahrom Rajabov", heroSub: "Student • Future Doctor",
+    heroTag: "The path to medicine begins with knowledge, discipline and the desire to help people",
+    aboutTitle: "About me",
+    aboutP1: "Hello! My name is Shahrom Rajabov. I am a medical university student who strives to become a qualified and attentive doctor.",
+    aboutP2: "Medicine for me is not just a profession, but a calling. I believe a good doctor must combine deep knowledge, empathy and continuous development.",
+    status: "Status", statusVal: "Medical university student",
+    goal: "Goal", goalVal: "Become a practicing physician",
+    interests: "Interests", interestsVal: "Clinical medicine, anatomy, therapy",
+    matTitle: "Exam materials",
+    matHero: "Pediatric Surgery — questions 1–182",
+    matDesc: "Main study material. Read the textbook on the site and search answers by question.",
+    openBook: "Open textbook",
+    searchPh: "Search questions (atresia, trauma, pyloric stenosis...)",
+    totalQ: "Total questions",
+    booksTitle: "Recommended books",
+    contactTitle: "Feedback",
+    send: "Send",
+    aiTitle: "AI Assistant",
+    aiLocal: "Search site materials",
+    aiWeb: "Ask general medical AI",
+    aiHint: "Enter a topic — I will search the materials. For other medical questions open ChatGPT / Perplexity."
+  }
+};
+
+let currentLang = localStorage.getItem('lang') || 'ru';
+let currentTheme = localStorage.getItem('theme') || 'light';
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  applyLang(currentLang);
+  initBurger();
+  initThemeBtn();
+  initLangBtn();
+  initAIChat();
+  initPdfButtons();
+});
+
+function applyLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (i18n[lang][key]) el.textContent = i18n[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (i18n[lang][key]) el.placeholder = i18n[lang][key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+}
+
+function initThemeBtn() {
+  const btn = document.getElementById('themeBtn');
+  if (!btn) return;
+  btn.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+  btn.addEventListener('click', () => {
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', currentTheme);
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    btn.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+  });
+}
+
+function initLangBtn() {
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+  });
+}
+
+function initBurger() {
+  const burger = document.getElementById('burger');
+  const nav = document.getElementById('nav');
+  if (!burger || !nav) return;
+  burger.addEventListener('click', () => {
+    nav.classList.toggle('open');
+    burger.textContent = nav.classList.contains('open') ? '✕' : '☰';
+  });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    nav.classList.remove('open'); burger.textContent = '☰';
+  }));
+}
+
+function initPdfButtons() {
+  document.querySelectorAll('[data-open-pdf]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      openPdfViewer(btn.getAttribute('data-open-pdf'));
+    });
+  });
+}
+
+function openPdfViewer(url) {
+  let modal = document.getElementById('pdfModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'pdfModal';
+    modal.className = 'pdf-modal';
+    modal.innerHTML = `
+      <div class="pdf-modal-inner">
+        <div class="pdf-modal-header">
+          <span>Pediatric Surgery / Детская хирургия</span>
+          <button id="pdfModalClose">✕</button>
+        </div>
+        <div class="pdf-modal-body"><iframe id="pdfFrame" src="" title="PDF"></iframe></div>
+      </div>`;
+    document.body.appendChild(modal);
+    document.getElementById('pdfModalClose').onclick = () => {
+      modal.classList.remove('open');
+      document.getElementById('pdfFrame').src = '';
+    };
+    modal.onclick = e => { if (e.target === modal) { modal.classList.remove('open'); document.getElementById('pdfFrame').src = ''; } };
+  }
+  document.getElementById('pdfFrame').src = url + '#toolbar=1';
+  modal.classList.add('open');
+}
+
+function initAIChat() {
+  if (document.getElementById('aiChatBtn')) return;
+  const btn = document.createElement('button');
+  btn.className = 'ai-chat-btn'; btn.id = 'aiChatBtn'; btn.innerHTML = '🤖';
+  document.body.appendChild(btn);
+
+  const panel = document.createElement('div');
+  panel.className = 'ai-chat-panel'; panel.id = 'aiChatPanel';
+  panel.innerHTML = `
+    <div class="ai-chat-header">
+      <span data-i18n="aiTitle">ИИ-помощник</span>
+      <button id="aiChatClose">✕</button>
+    </div>
+    <div class="ai-chat-body">
+      <p style="font-weight:600;margin-bottom:10px;" data-i18n="aiLocal">Поиск по материалам сайта</p>
+      <input id="aiInput" type="text" data-i18n-placeholder="searchPh" placeholder="атрезия, травма..."
+        style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--bg-card);color:var(--text);margin-bottom:10px;font-size:0.95rem;">
+      <button id="aiSearchBtn" class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:14px;">Найти</button>
+      <div id="aiResults" style="font-size:0.9rem;"></div>
+      <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);">
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:10px;" data-i18n="aiWeb">Спросить общий медицинский ИИ</p>
+        <a href="https://chatgpt.com/" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%;justify-content:center;background:#10a37f;margin-bottom:8px;">ChatGPT</a>
+        <a href="https://www.perplexity.ai/" target="_blank" rel="noopener" class="btn" style="width:100%;justify-content:center;background:var(--bg-card);border:1px solid var(--border);color:var(--text);">Perplexity (с источниками)</a>
+      </div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-top:12px;" data-i18n="aiHint"></p>
+    </div>
+    <div class="ai-chat-disclaimer">Не заменяет врача и учебник. Проверяйте важную информацию.</div>
+  `;
+  document.body.appendChild(panel);
+
+  btn.onclick = () => {
+    const open = panel.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    btn.innerHTML = open ? '✕' : '🤖';
+  };
+  document.getElementById('aiChatClose').onclick = () => {
+    panel.classList.remove('open'); btn.classList.remove('open'); btn.innerHTML = '🤖';
+  };
+
+  const doSearch = () => {
+    const q = (document.getElementById('aiInput').value || '').toLowerCase().trim();
+    const results = document.getElementById('aiResults');
+    if (!q) { results.innerHTML = '<p style="color:var(--text-muted)">Введите запрос</p>'; return; }
+    if (typeof fullQuestions === 'undefined') {
+      results.innerHTML = '<p>Откройте страницу «Материалы» для поиска по 182 вопросам.</p>';
+      return;
+    }
+    const found = fullQuestions.filter(i =>
+      i.t.toLowerCase().includes(q) || (i.a && i.a.toLowerCase().includes(q))
+    ).slice(0, 6);
+    if (!found.length) {
+      results.innerHTML = '<p>В материалах не найдено. Попробуйте ChatGPT или Perplexity ниже.</p>';
+      return;
+    }
+    results.innerHTML = found.map(i => `
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:10px;margin-bottom:8px;">
+        <div style="font-weight:700;color:var(--primary);margin-bottom:4px;">№${i.n}. ${i.t}</div>
+        <div style="font-size:0.82rem;color:var(--text-muted);max-height:60px;overflow:hidden;">${(i.a||'').replace(/<[^>]+>/g,'').slice(0,160)}...</div>
+      </div>`).join('');
+  };
+  document.getElementById('aiSearchBtn').onclick = doSearch;
+  document.getElementById('aiInput').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+  applyLang(currentLang);
+}
+</script>
+  <script>
+  const CASES = {"therapy": [{"id": "ibs", "title": "ИБС (стенокардия / ОКС)", "tag": "Терапия", "patient": "Мужчина, 58 лет. Давящая боль за грудиной 40 мин, отдает в левую руку. Потливость, одышка.", "steps": [{"name": "Жалобы", "text": "Что наиболее характерно для типичной стенокардии / ОКС?", "choices": ["Давящая боль за грудиной, связь с нагрузкой или длительность >20 мин", "Боль только в эпигастрии без других симптомов", "Боль при пальпации рёбер", "Головная боль и головокружение"], "correct": 0, "fb": "Классика: загрудинная давящая боль, иррадиация, вегетатика. При >20 мин — думать об ОКС."}, {"name": "Осмотр", "text": "Первые действия у постели:", "choices": ["ABC, ЭКГ в 12 отведениях, доступ, SpO2", "Сразу только УЗИ живота", "Только анальгин в/м", "Ждать утра для плановой ЭКГ"], "correct": 0, "fb": "ЭКГ в первые 10 минут — стандарт при подозрении на ОКС."}, {"name": "Диагноз", "text": "На ЭКГ подъём ST в II, III, aVF. Наиболее вероятно:", "choices": ["Нижний (правый коронарный) STEMI", "Передний STEMI", "ТЭЛА без изменений ЭКГ", "Перикардит"], "correct": 0, "fb": "II, III, aVF — нижняя стенка, чаще RCA."}, {"name": "Лечение", "text": "Неотложная тактика при STEMI:", "choices": ["Реперфузия (ЧКВ/тромболизис), двойная антиагрегантная, антикоагулянт, статины", "Только постельный режим", "Только нитроглицерин без госпитализации", "Антибиотики"], "correct": 0, "fb": "Время = мышца. Реперфузия как можно раньше."}]}, {"id": "pneumonia", "title": "Внебольничная пневмония", "tag": "Терапия", "patient": "Женщина, 42 года. Лихорадка 38,7°C, кашель с мокротой, боль в боку при дыхании 4 дня.", "steps": [{"name": "Жалобы", "text": "Классический симптомокомплекс пневмонии:", "choices": ["Лихорадка, кашель, одышка, боль в груди плеврального характера", "Только насморк 1 день", "Только изжога", "Боль в суставах без температуры"], "correct": 0, "fb": "Лихорадка + респираторные симптомы + локальные данные — ключ."}, {"name": "Осмотр", "text": "Аускультативно ожидаете:", "choices": ["Локальное ослабление дыхания, крепитация/влажные хрипы", "Только сухие хрипы по всем полям", "Полностью нормальное дыхание", "Только шум трения перикарда"], "correct": 0, "fb": "Локальные влажные хрипы/крепитация типичны."}, {"name": "Диагноз", "text": "Базовый метод подтверждения:", "choices": ["Рентген органов грудной клетки (или КТ при сомнениях)", "Только общий анализ мочи", "Только ЭКГ", "Только УЗИ щитовидной железы"], "correct": 0, "fb": "Рентген — стандарт подтверждения инфильтрата."}, {"name": "Лечение", "text": "Стартовая терапия амбулаторно (без факторов риска):", "choices": ["Амоксициллин или макролид / респираторный фторхинолон по локальным рекомендациям", "Только противовирусные при любой пневмонии", "Только муколитики без антибиотика", "Гормоны сразу всем"], "correct": 0, "fb": "Антибиотик по тяжести и резистентности в регионе."}]}, {"id": "bronchitis", "title": "Острый бронхит", "tag": "Терапия", "patient": "Мужчина, 30 лет. Сухой кашель 8 дней после ОРВИ, температура нормальная, хрипы рассеянные сухие.", "steps": [{"name": "Жалобы", "text": "Для острого бронхита наиболее характерно:", "choices": ["Кашель (часто после вирусной инфекции), без выраженных признаков пневмонии", "Высокая лихорадка и боль в боку с «ржавой» мокротой", "Кровохарканье и потеря веса", "Ночные поты и лимфоузлы"], "correct": 0, "fb": "Чаще вирусный; кашель может длиться 2–3 недели."}, {"name": "Диагноз", "text": "Рентген грудной клетки показан, если:", "choices": ["Подозрение на пневмонию (одышка, тахикардия, очаговые данные, возраст/коморбидность)", "Всегда при любом кашле 3 дня", "Никогда", "Только при насморке"], "correct": 0, "fb": "Не всем подряд — по клиническим критериям."}, {"name": "Лечение", "text": "Основной подход:", "choices": ["Симптоматический; антибиотики не рутинно (большинство — вирусы)", "Обязательно антибиотик всем", "Длительные системные стероиды всем", "Химиотерапия"], "correct": 0, "fb": "Антибиотики — при бактериальных признаках/осложнениях."}]}, {"id": "jaundice", "title": "Желтуха (дифференциальный подход)", "tag": "Терапия", "patient": "Мужчина, 45 лет. Желтушность кожи и склер, тёмная моча, светлый стул, зуд. Боль в правом подреберье.", "steps": [{"name": "Жалобы", "text": "Светлый стул + тёмная моча + зуд больше говорят о:", "choices": ["Подпечёночной (механической) желтухе", "Только гемолизе", "Только каротинемии", "Норме"], "correct": 0, "fb": "Холестаз: билирубин в моче, нет стеркобилина в кале."}, {"name": "Обследование", "text": "Первый шаг визуализации:", "choices": ["УЗИ брюшной полости (желчные пути, камни, расширение протоков)", "Сразу только МРТ головы", "Только рентген стопы", "Только спирометрия"], "correct": 0, "fb": "УЗИ — доступный скрининг обструкции."}, {"name": "Диагноз", "text": "При расширенных внутри- и внепечёночных протоках и камне в холедохе:", "choices": ["Механическая желтуха (холедохолитиаз) — нужна декомпрессия/ЭРХПГ по показаниям", "Только «физиологическая» желтуха взрослого", "Только вирусный гепатит без визуализации", "Игнорировать"], "correct": 0, "fb": "Обструкцию устраняют; важно не пропустить холангит."}]}, {"id": "asthma", "title": "Бронхиальная астма (обострение)", "tag": "Терапия", "patient": "Женщина, 25 лет. Приступообразный кашель, свистящее дыхание, одышка ночью. Пикфлоуметрия снижена.", "steps": [{"name": "Жалобы", "text": "Типичные признаки астмы:", "choices": ["Эпизоды свистящего дыхания, одышки, кашля; вариабельность; ответ на бронхолитики", "Постоянный односторонний хрип без изменений", "Только отёки ног", "Боль в суставах"], "correct": 0, "fb": "Обратимая обструкция + гиперреактивность."}, {"name": "Обострение", "text": "Неотложная помощь при приступе:", "choices": ["Ингаляционный КДБА (сальбутамол), O2 по показаниям, системные стероиды при среднетяжёлом/тяжёлом", "Только кодеин", "Только антибиотик", "Полный покой без ингаляторов"], "correct": 0, "fb": "КДБА — первая линия купирования."}, {"name": "Базис", "text": "Контроль заболевания опирается на:", "choices": ["Ингаляционные глюкокортикостероиды ± ДДБА, обучение технике ингаляции", "Только постоянные антибиотики", "Только постельный режим", "Отказ от любых ингаляторов"], "correct": 0, "fb": "ИГКС — основа контроля."}]}], "surgery": [{"id": "appendicitis", "title": "Острый аппендицит", "tag": "Хирургия", "patient": "Юноша, 19 лет. Боль в эпигастрии → правая подвздошная область, тошнота, температура 37,6°C.", "steps": [{"name": "Жалобы", "text": "Классическая миграция боли при аппендиците:", "choices": ["От эпигастрия/околопупочной к правой подвздошной области", "Сразу только в левое подреберье", "Только в поясницу без живота", "Только головная боль"], "correct": 0, "fb": "Миграция боли — важный анамнестический признак."}, {"name": "Осмотр", "text": "Положительные симптомы:", "choices": ["Щёткин–Блюмберг, Ровзинг, локальная защита справа", "Только симптом Пастернацкого слева", "Отсутствие любой болезненности", "Только ригидность затылка"], "correct": 0, "fb": "Локальный перитонеальный синдром справа."}, {"name": "Диагноз", "text": "При сомнении у взрослых часто используют:", "choices": ["УЗИ / КТ живота, лаборатория (лейкоцитоз)", "Только ЭКГ", "Только рентген черепа", "Наблюдение дома без осмотра"], "correct": 0, "fb": "Визуализация снижает отрицательные аппендэктомии."}, {"name": "Лечение", "text": "Стандарт при установленном остром аппендиците:", "choices": ["Аппендэктомия (часто лапароскопическая) + антибиотики по протоколу", "Только чай и диета дома", "Только спазмолитик", "Химиотерапия"], "correct": 0, "fb": "Хирургия — основа; сроки важны."}]}, {"id": "cholecystitis", "title": "Острый калькулёзный холецистит", "tag": "Хирургия", "patient": "Женщина, 48 лет. Боль в правом подреберье после жирной пищи, тошнота, положительный симптом Мерфи.", "steps": [{"name": "Жалобы", "text": "Типичный триггер:", "choices": ["Жирная/обильная еда, боль в правом подреберье", "Бег на длинные дистанции", "Только стресс без боли", "Кашель"], "correct": 0, "fb": "Билиарная колика/холецистит часто после жирного."}, {"name": "Диагноз", "text": "Метод выбора первой линии:", "choices": ["УЗИ желчного пузыря (камни, стенка, перивезикальная жидкость)", "Только маркеры инфаркта", "Только спирометрия", "Только рентген кисти"], "correct": 0, "fb": "УЗИ — золотой стандарт скрининга."}, {"name": "Лечение", "text": "При остром калькулёзном холецистите:", "choices": ["Госпитализация, антибиотики, ранняя холецистэктомия по показаниям", "Только домашние грелки", "Только слабительное", "Игнор"], "correct": 0, "fb": "Ранняя лапароскопическая холецистэктомия часто предпочтительна."}]}, {"id": "hernia", "title": "Ущемлённая паховая грыжа", "tag": "Хирургия", "patient": "Мужчина, 62 лет. Резкая боль в паху, невправимое выпячивание, рвота.", "steps": [{"name": "Клиника", "text": "Признаки ущемления:", "choices": ["Боль, невправимость, возможно нарушение пассажа/рвота", "Мягкая безболезненная вправимая грыжа без жалоб", "Только отёк лодыжек", "Кашель 1 день"], "correct": 0, "fb": "Ущемление — неотложное состояние."}, {"name": "Тактика", "text": "Правильно:", "choices": ["Срочная госпитализация, не пытаться силой вправлять при подозрении на ущемление, операция", "Сильное вправление на дому", "Только мазь", "Наблюдение неделю дома"], "correct": 0, "fb": "Риск некроза кишки — операция без задержки."}]}], "pedsurg": [{"id": "pyloric", "title": "Пилоростеноз", "tag": "Детская хирургия", "patient": "Мальчик, 5 недель. Рвота «фонтаном» без желчи, потеря веса, «олива» в правом подреберье.", "steps": [{"name": "Клиника", "text": "Классика пилоростеноза:", "choices": ["Возраст 2–8 недель, рвота фонтаном без желчи, голодный ребёнок", "Рвота желчью с рождения", "Мелена у подростка", "Только запор у школьника"], "correct": 0, "fb": "Гипертрофический пилоростеноз — типичный возраст и рвота без желчи."}, {"name": "Диагноз", "text": "Метод выбора:", "choices": ["УЗИ привратника (толщина/длина)", "Только КТ головы", "Только ЭКГ", "Только анализ на глистов"], "correct": 0, "fb": "УЗИ — стандарт."}, {"name": "Лечение", "text": "Операция выбора:", "choices": ["Пилоромиотомия по Фреде–Рамштедту после коррекции электролитов", "Только зондовое кормление пожизненно", "Гастрэктомия", "Только антибиотики"], "correct": 0, "fb": "Сначала регидратация и K+, затем миотомия."}]}, {"id": "intussusception", "title": "Инвагинация кишечника", "tag": "Детская хирургия", "patient": "Ребёнок, 11 месяцев. Приступообразный плач, «малиновое желе» из прямой кишки, пальпируемое образование.", "steps": [{"name": "Клиника", "text": "Классическая триада:", "choices": ["Приступообразная боль, рвота, кровянистый стул («малиновое желе»)", "Только экзема", "Только насморк", "Безболезненный запор без крови"], "correct": 0, "fb": "Пик 6–12 месяцев."}, {"name": "Диагноз", "text": "Предпочтительный метод:", "choices": ["УЗИ («мишень» / target sign)", "Только рентген черепа", "Только ЭЭГ", "Только анализ мокроты"], "correct": 0, "fb": "УЗИ высокоинформативно."}, {"name": "Лечение", "text": "При неосложнённой инвагинации:", "choices": ["Пневматическая/гидростатическая дезинвагинация под контролем; операция при неудаче/осложнениях", "Только чай дома", "Химиотерапия", "Игнор 3 дня"], "correct": 0, "fb": "Консервативная дезинвагинация — первая линия при стабильности."}]}, {"id": "ea", "title": "Атрезия пищевода", "tag": "Детская хирургия", "patient": "Новорождённый. Обильная пенистая слюна, цианоз и кашель при попытке кормления. Не проходит зонд в желудок.", "steps": [{"name": "Клиника", "text": "Ключевой признак:", "choices": ["Пенистые выделения, аспирация при кормлении, невозможность провести зонд", "Нормальное кормление с первых часов", "Только желтуха 3 суток", "Только опрелости"], "correct": 0, "fb": "Подозревать до первого кормления при многоводии/слюне."}, {"name": "Диагноз", "text": "Подтверждение:", "choices": ["Зонд + рентген (зонд в слепом мешке; воздух в ЖКТ при дистальном ТПС)", "Только УЗИ тазобедренных суставов", "Только анализ кала", "Только отоскопия"], "correct": 0, "fb": "Рентген с контрастным зондом (осторожно) / воздух в кишечнике."}, {"name": "Тактика", "text": "До операции:", "choices": ["Санация, приподнятый головной конец, запрет энтерального кормления, перевод в центр", "Кормление грудью через силу", "Выписка домой", "Только витамин D"], "correct": 0, "fb": "Профилактика аспирации и ранняя хирургия."}]}]};
+  let cat = 'therapy';
+  let currentCase = null;
+  let stepIdx = 0;
+  let score = 0;
+
+  const nav = document.getElementById('clinNav');
+  const list = document.getElementById('caseList');
+  const sim = document.getElementById('simArea');
+
+  nav.querySelectorAll('.clin-tab').forEach(btn => {
+    btn.onclick = () => {
+      nav.querySelectorAll('.clin-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      cat = btn.dataset.cat;
+      sim.classList.remove('open');
+      sim.innerHTML = '';
+      renderList();
+    };
+  });
+
+  function renderList() {
+    const items = CASES[cat] || [];
+    list.style.display = 'grid';
+    list.innerHTML = items.map(c => `
+      <div class="case-card" data-id="${c.id}">
+        <h3>${c.title}</h3>
+        <p>${c.patient.slice(0, 100)}…</p>
+        <span class="tag">${c.tag}</span>
+      </div>
+    `).join('');
+    list.querySelectorAll('.case-card').forEach(card => {
+      card.onclick = () => startCase(card.dataset.id);
+    });
+  }
+
+  function startCase(id) {
+    currentCase = (CASES[cat] || []).find(c => c.id === id);
+    if (!currentCase) return;
+    stepIdx = 0;
+    score = 0;
+    list.style.display = 'none';
+    sim.classList.add('open');
+    renderStep();
+  }
+
+  function renderStep() {
+    const c = currentCase;
+    const steps = c.steps;
+    const s = steps[stepIdx];
+    const pills = steps.map((st, i) => {
+      let cls = 'step-pill';
+      if (i < stepIdx) cls += ' done';
+      if (i === stepIdx) cls += ' current';
+      return `<span class="${cls}">${i+1}. ${st.name}</span>`;
+    }).join('');
+
+    sim.innerHTML = `
+      <div class="sim-header">
+        <button class="mode-btn" id="btnBackList" style="padding:8px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg-card);cursor:pointer;font-weight:600">← К списку</button>
+        <strong>${c.title}</strong>
+      </div>
+      <div class="step-bar">${pills}</div>
+      <div class="patient-box">
+        <div class="label">Пациент / ситуация</div>
+        <div>${c.patient}</div>
+      </div>
+      <div class="sim-panel">
+        <h3 style="margin-bottom:12px;color:var(--primary)">${s.name}</h3>
+        <p style="margin-bottom:14px;font-weight:600">${s.text}</p>
+        <div id="choices"></div>
+        <div id="fb" class="feedback" style="display:none"></div>
+        <button class="btn btn-primary" id="btnNext" style="margin-top:14px;display:none">Далее →</button>
+      </div>
+    `;
+
+    document.getElementById('btnBackList').onclick = () => {
+      sim.classList.remove('open');
+      list.style.display = 'grid';
+    };
+
+    const ch = document.getElementById('choices');
+    ch.innerHTML = s.choices.map((t, i) =>
+      `<button class="choice" data-i="${i}">${t}</button>`
+    ).join('');
+
+    let locked = false;
+    ch.querySelectorAll('.choice').forEach(btn => {
+      btn.onclick = () => {
+        if (locked) return;
+        locked = true;
+        const i = +btn.dataset.i;
+        ch.querySelectorAll('.choice').forEach(b => {
+          b.classList.remove('selected');
+          const j = +b.dataset.i;
+          if (j === s.correct) b.classList.add('correct');
+          if (j === i && j !== s.correct) b.classList.add('wrong');
+        });
+        btn.classList.add('selected');
+        if (i === s.correct) score++;
+        const fb = document.getElementById('fb');
+        fb.style.display = 'block';
+        fb.innerHTML = s.fb;
+        document.getElementById('btnNext').style.display = 'inline-flex';
+      };
+    });
+
+    document.getElementById('btnNext').onclick = () => {
+      stepIdx++;
+      if (stepIdx >= steps.length) {
+        showResult();
+      } else {
+        renderStep();
+      }
+    };
+  }
+
+  function showResult() {
+    const total = currentCase.steps.length;
+    const pct = Math.round(score / total * 100);
+    const mark = pct >= 80 ? 'Отлично — клиническое мышление на уровне' :
+                 pct >= 60 ? 'Хорошо — повторите слабые шаги' :
+                 'Нужно разобрать тему ещё раз';
+    sim.innerHTML = `
+      <div class="sim-panel" style="text-align:center">
+        <h3 style="color:var(--primary);margin-bottom:10px">${currentCase.title}</h3>
+        <div style="font-size:2.4rem;font-weight:800;color:var(--text)">${score} / ${total}</div>
+        <div style="color:var(--text-muted);margin:8px 0 18px">${pct}% · ${mark}</div>
+        <button class="btn btn-primary" id="btnRetry">Пройти снова</button>
+        <button class="btn" id="btnToList" style="margin-left:8px;border:1.5px solid var(--border);background:var(--bg-card);color:var(--text)">К списку кейсов</button>
+      </div>`;
+    document.getElementById('btnRetry').onclick = () => { stepIdx = 0; score = 0; renderStep(); };
+    document.getElementById('btnToList').onclick = () => {
+      sim.classList.remove('open');
+      list.style.display = 'grid';
+    };
+  }
+
+  renderList();
+  </script>
+</body>
+</html>
