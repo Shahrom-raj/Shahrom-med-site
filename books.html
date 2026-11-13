@@ -392,15 +392,19 @@ a { text-decoration: none; color: inherit; transition: 0.2s; }
       </a>
       <button class="burger" id="burger">☰</button>
       <nav class="nav" id="nav">
-      <a href="index.html" class="" data-i18n="about">О себе</a>
-      <a href="materials.html" class="" data-i18n="materials">Материалы</a>
-      <a href="books.html" class="active" data-i18n="books">Книги</a>
-      <a href="contact.html" class="" data-i18n="contact">Обратная связь</a>
-    </nav>
+        <a href="index.html" data-i18n="about">О себе</a>
+        <a href="materials.html" data-i18n="materials">Материалы</a>
+        <a href="clinical.html">Клиника</a>
+        <a href="exam.html">Экзамен</a>
+        <a href="tests.html">Тесты</a>
+        <a href="schedule.html">Расписание</a>
+        <a href="books.html" class="active" data-i18n="books">Книги</a>
+        <a href="contact.html" data-i18n="contact">Обратная связь</a>
+      </nav>
       <div class="header-actions">
         <button class="lang-btn active" data-lang="ru">RU</button>
         <button class="lang-btn" data-lang="en">EN</button>
-        <button class="icon-btn" id="themeBtn" title="Theme">🌙</button>
+        <button class="icon-btn" id="themeBtn">🌙</button>
       </div>
     </div>
   </header>
@@ -408,20 +412,122 @@ a { text-decoration: none; color: inherit; transition: 0.2s; }
 <section class="section">
   <div class="container">
     <h2 class="section-title" data-i18n="booksTitle">Рекомендуемые книги</h2>
+    <div class="note">
+      Разделы по дисциплинам. Основной учебник по детской хирургии уже встроен в раздел «Материалы».
+      Для остальных книг добавь свои легальные PDF в репозиторий и укажи ссылку вида <code>href="имя-файла.pdf"</code>.
+    </div>
+
+    <h3 style="margin:28px 0 14px;color:var(--primary);font-size:1.25rem;">🩺 Детская хирургия</h3>
+    <div class="grid-2" style="margin-bottom:24px;">
+      <div class="card item-card">
+        <div class="item-icon">📖</div>
+        <div>
+          <h3>Детская хирургия (Исаков, Разумовский)</h3>
+          <p>Основной учебник. 182 вопроса уже на сайте.</p>
+          <a href="materials.html" class="badge" style="display:inline-block;margin-top:8px;">Открыть на сайте →</a>
+        </div>
+      </div>
+      <div class="card item-card">
+        <div class="item-icon">📖</div>
+        <div>
+          <h3>Детская хирургия — дополнительные материалы</h3>
+          <p>Загрузи PDF в репозиторий и вставь ссылку.</p>
+          <span class="badge">Добавь ссылку</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin:28px 0 14px;color:var(--primary);font-size:1.25rem;">🫁 Фтизиатрия</h3>
+    <div class="grid-2" style="margin-bottom:24px;">
+      <div class="card item-card">
+        <div class="item-icon">📖</div>
+        <div>
+          <h3>Фтизиатрия (учебник)</h3>
+          <p>Туберкулёз, диагностика, лечение.</p>
+          <span class="badge">Добавь ссылку на PDF</span>
+        </div>
+      </div>
+      <div class="card item-card">
+        <div class="item-icon">📖</div>
+        <div>
+          <h3>Фтизиатрия у детей</h3>
+          <p>Особенности детского возраста.</p>
+          <span class="badge">Добавь ссылку на PDF</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin:28px 0 14px;color:var(--primary);font-size:1.25rem;">🦠 Эпидемиология</h3>
+    <div class="grid-2" style="margin-bottom:24px;">
+      <div class="card item-card">
+        <div class="item-icon">📖</div>
+        <div>
+          <h3>Эпидемиология</h3>
+          <p>Общий курс, инфекции, профилактика.</p>
+          <span class="badge">Добавь ссылку на PDF</span>
+        </div>
+      </div>
+      <div class="card item-card">
+        <div class="item-icon">📖</div>
+        <div>
+          <h3>Эпидемиология инфекционных болезней</h3>
+          <p>Методы и практика.</p>
+          <span class="badge">Добавь ссылку на PDF</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin:28px 0 14px;color:var(--primary);font-size:1.25rem;">🫀 Сосудистая хирургия</h3>
+    <div class="grid-2" style="margin-bottom:24px;">
+      <div class="card item-card">
+        <div class="item-icon">📖</div>
+        <div>
+          <h3>Сосудистая хирургия</h3>
+          <p>Артерии, вены, операции.</p>
+          <span class="badge">Добавь ссылку на PDF</span>
+        </div>
+      </div>
+      <div class="card item-card">
+        <div class="item-icon">📖</div>
+        <div>
+          <h3>Ангиология</h3>
+          <p>Клиника и лечение.</p>
+          <span class="badge">Добавь ссылку на PDF</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin:28px 0 14px;color:var(--primary);font-size:1.25rem;">🧠 Психиатрия</h3>
+    <div class="grid-2" style="margin-bottom:24px;">
+      <div class="card item-card">
+        <div class="item-icon">📖</div>
+        <div>
+          <h3>Психиатрия</h3>
+          <p>Общая и частная психиатрия.</p>
+          <span class="badge">Добавь ссылку на PDF</span>
+        </div>
+      </div>
+      <div class="card item-card">
+        <div class="item-icon">📖</div>
+        <div>
+          <h3>Детская психиатрия</h3>
+          <p>Расстройства у детей и подростков.</p>
+          <span class="badge">Добавь ссылку на PDF</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin:28px 0 14px;color:var(--primary);font-size:1.25rem;">📚 Базовые дисциплины</h3>
     <div class="grid-2">
-      <div class="card item-card"><div class="item-icon">📖</div><div><h3>Атлас анатомии человека</h3><p>Синельников Р.Д.</p><span class="badge">Обязательно</span></div></div>
+      <div class="card item-card"><div class="item-icon">📖</div><div><h3>Атлас анатомии (Синельников)</h3><p>Классический атлас</p><span class="badge">Обязательно</span></div></div>
       <div class="card item-card"><div class="item-icon">📖</div><div><h3>Нормальная физиология</h3><p>Смирнов / Орлов</p><span class="badge">Базовый</span></div></div>
-      <div class="card item-card"><div class="item-icon">📖</div><div><h3>Биохимия</h3><p>Северин / Березов</p><span class="badge">Базовый</span></div></div>
-      <div class="card item-card"><div class="item-icon">📖</div><div><h3>Патологическая анатомия</h3><p>Струков, Серов</p><span class="badge">Рекомендую</span></div></div>
-      <div class="card item-card"><div class="item-icon">📖</div><div><h3>Внутренние болезни</h3><p>Моисеев / Мартюшев</p><span class="badge">Клиника</span></div></div>
-      <div class="card item-card"><div class="item-icon">📖</div><div><h3>Фармакология</h3><p>Харкевич Д.А.</p><span class="badge">Базовый</span></div></div>
+      <div class="card item-card"><div class="item-icon">📖</div><div><h3>Биохимия (Северин)</h3><p>Фундаментальный</p><span class="badge">Базовый</span></div></div>
+      <div class="card item-card"><div class="item-icon">📖</div><div><h3>Фармакология (Харкевич)</h3><p>Основной учебник</p><span class="badge">Базовый</span></div></div>
     </div>
   </div>
 </section>
 
-  <footer class="footer">
-    <div class="container"><p>© 2025–2026 Shahrom Rajabov · Medical student</p></div>
-  </footer>
+  <footer class="footer"><div class="container"><p>© 2025–2026 Shahrom Rajabov</p></div></footer>
   <script>// Theme + Language + AI + PDF
 const i18n = {
   ru: {
@@ -634,6 +740,5 @@ function initAIChat() {
   applyLang(currentLang);
 }
 </script>
-  
 </body>
 </html>
