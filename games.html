@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Игры — Shahrom Rajabov</title>
+  <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #f0f7f7;
+  --bg-card: #ffffff;
+  --text: #0f2c32;
+  --text-muted: #5a7178;
+  --primary: #0d7377;
+  --primary-hover: #0a5c5f;
+  --accent: #14b8a6;
+  --border: #d0e5e5;
+  --header-bg: rgba(255,255,255,0.9);
+  --shadow: 0 4px 24px rgba(13,115,119,0.08);
+  --radius: 14px;
+  --danger: #e11d48;
+}
+
+[data-theme="dark"] {
+  --bg: #0b1a1d;
+  --bg-card: #122529;
+  --text: #e6f2f2;
+  --text-muted: #8aa3a8;
+  --primary: #2dd4bf;
+  --primary-hover: #5eead4;
+  --accent: #14b8a6;
+  --border: #1e3a3f;
+  --header-bg: rgba(11,26,29,0.92);
+  --shadow: 0 4px 24px rgba(0,0,0,0.35);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.25s, color 0.25s;
+}
+a { text-decoration: none; color: inherit; transition: 0.2s; }
+.container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+/* Header */
+.header {
+  background: var(--header-bg);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  gap: 12px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+.logo-icon {
+  width: 42px; height: 42px;
+  background: linear-gradient(145deg, var(--primary), var(--accent));
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 1.3rem;
+  box-shadow: 0 4px 14px rgba(13,115,119,0.3);
+}
+.nav { display: flex; gap: 4px; flex-wrap: wrap; }
+.nav a {
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+.nav a:hover, .nav a.active {
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  color: var(--primary);
+}
+.header-actions { display: flex; align-items: center; gap: 8px; }
+.icon-btn {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  transition: 0.2s;
+}
+.icon-btn:hover { border-color: var(--primary); color: var(--primary); }
+.lang-btn {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.lang-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+.burger { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); }
+
+/* Hero */
+.hero {
+  background: linear-gradient(145deg, #0a2e36 0%, #0d7377 50%, #14b8a6 100%);
+  color: white;
+  padding: 64px 0 56px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.03em; }
+.hero .subtitle { font-size: 1.15rem; opacity: 0.95; font-weight: 500; }
+.hero .tagline { font-size: 0.98rem; opacity: 0.8; max-width: 460px; margin: 12px auto 0; }
+
+/* Sections */
+.section { padding: 48px 0; }
+.section-title {
+  font-size: 1.7rem; font-weight: 800; color: var(--text);
+  margin-bottom: 24px; letter-spacing: -0.02em;
+  position: relative; padding-bottom: 10px;
+}
+.section-title::after {
+  content: ''; position: absolute; left: 0; bottom: 0;
+  width: 44px; height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 4px;
+}
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 24px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  height: 100%;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(13,115,119,0.12); }
+.card h3 { color: var(--primary); margin-bottom: 8px; font-size: 1.15rem; font-weight: 700; }
+.card p { color: var(--text-muted); font-size: 0.93rem; }
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+
+/* About */
+.about-content { display: grid; grid-template-columns: 1fr 1.5fr; gap: 36px; align-items: start; }
+.about-photo {
+  background: linear-gradient(145deg, color-mix(in srgb, var(--primary) 20%, var(--bg)), color-mix(in srgb, var(--accent) 25%, var(--bg)));
+  border-radius: var(--radius); aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 5rem; border: 2px solid var(--border);
+}
+.about-text p { margin-bottom: 12px; color: var(--text-muted); }
+.about-text strong { color: var(--text); }
+.info-list { list-style: none; margin-top: 18px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border); overflow: hidden; }
+.info-list li { padding: 11px 16px; border-bottom: 1px solid var(--border); display: flex; gap: 12px; }
+.info-list li:last-child { border-bottom: none; }
+.info-list .label { font-weight: 700; color: var(--primary); min-width: 90px; font-size: 0.88rem; }
+
+/* Material hero + book viewer */
+.material-hero {
+  background: linear-gradient(145deg, #0a2e36, #0d7377 60%, #14b8a6);
+  color: white; padding: 28px; border-radius: var(--radius); margin-bottom: 24px;
+}
+.material-hero h3 { color: white; font-size: 1.35rem; font-weight: 800; margin-bottom: 8px; }
+.material-hero p { opacity: 0.92; margin-bottom: 18px; max-width: 520px; }
+.btn-read, .btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: white; color: #0a2e36;
+  padding: 12px 22px; border-radius: 999px;
+  font-weight: 700; font-size: 0.95rem; border: none; cursor: pointer;
+  transition: 0.2s; font-family: inherit;
+}
+.btn-read:hover, .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+}
+
+/* Embedded book section */
+.book-viewer {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow);
+}
+.book-viewer-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; background: var(--bg);
+  border-bottom: 1px solid var(--border); font-weight: 700;
+}
+.book-frame {
+  width: 100%; height: 70vh; min-height: 420px; border: none;
+  background: #e8eef0;
+}
+
+/* Search & questions */
+.search-box { margin-bottom: 16px; }
+.search-box input {
+  width: 100%; max-width: 480px; padding: 12px 16px;
+  border: 1.5px solid var(--border); border-radius: 999px;
+  font-size: 1rem; background: var(--bg-card); color: var(--text);
+  font-family: inherit; transition: 0.2s;
+}
+.search-box input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent); }
+.stats { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; font-size: 0.88rem; color: var(--text-muted); }
+.stats strong { color: var(--primary); }
+
+.q-list { list-style: none; }
+.q-item {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; margin-bottom: 8px; overflow: hidden; transition: 0.15s;
+}
+.q-item:hover { box-shadow: var(--shadow); }
+.q-header {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 13px 15px; cursor: pointer; user-select: none;
+}
+.q-num {
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  color: var(--primary); font-weight: 800; font-size: 0.78rem;
+  min-width: 32px; height: 26px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.q-title { flex: 1; font-weight: 600; font-size: 0.94rem; line-height: 1.4; }
+.q-toggle { color: var(--text-muted); font-size: 0.85rem; transition: 0.2s; }
+.q-item.open .q-toggle { transform: rotate(180deg); }
+.q-body {
+  display: none; padding: 12px 16px 16px;
+  border-top: 1px solid var(--border);
+  max-height: 65vh; overflow-y: auto;
+  font-size: 0.92rem; line-height: 1.55; background: color-mix(in srgb, var(--primary) 4%, var(--bg));
+}
+.q-item.open .q-body { display: block; }
+.q-body p { margin-bottom: 8px; }
+.q-body h4 { margin: 12px 0 6px; color: var(--primary); }
+
+.note {
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  border-left: 4px solid var(--primary);
+  padding: 12px 16px; border-radius: 0 10px 10px 0;
+  margin-bottom: 18px; font-size: 0.9rem; color: var(--text-muted);
+}
+
+.item-card { display: flex; gap: 14px; align-items: flex-start; }
+.item-icon {
+  width: 48px; height: 48px;
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; flex-shrink: 0;
+}
+.badge {
+  display: inline-block;
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  color: var(--primary); font-size: 0.72rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 20px; margin-top: 6px;
+}
+
+/* Contact */
+.contact-form {
+  background: var(--bg-card); padding: 28px; border-radius: var(--radius);
+  border: 1px solid var(--border); box-shadow: var(--shadow); max-width: 520px;
+}
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 0.9rem; }
+.form-group input, .form-group textarea {
+  width: 100%; padding: 11px 14px; border: 1.5px solid var(--border);
+  border-radius: 10px; font-size: 1rem; font-family: inherit;
+  background: var(--bg); color: var(--text); transition: 0.2s;
+}
+.form-group input:focus, .form-group textarea:focus {
+  outline: none; border-color: var(--primary);
+}
+.form-group textarea { min-height: 120px; resize: vertical; }
+
+/* Footer */
+.footer {
+  background: #0a2e36; color: rgba(255,255,255,0.8);
+  padding: 24px 0; margin-top: auto; text-align: center; font-size: 0.88rem;
+}
+
+/* AI Widget */
+.ai-chat-btn {
+  position: fixed; bottom: 22px; right: 22px;
+  width: 60px; height: 60px; border-radius: 50%;
+  background: linear-gradient(145deg, var(--primary), var(--accent));
+  color: white; border: none;
+  box-shadow: 0 8px 28px rgba(13,115,119,0.4);
+  cursor: pointer; z-index: 1500;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.7rem; transition: 0.2s;
+}
+.ai-chat-btn:hover { transform: scale(1.08); }
+.ai-chat-btn.open { background: #64748b; }
+.ai-chat-panel {
+  position: fixed; bottom: 94px; right: 22px;
+  width: 380px; max-width: calc(100vw - 24px);
+  height: 520px; max-height: calc(100vh - 120px);
+  background: var(--bg-card); border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.2);
+  z-index: 1499; display: none; flex-direction: column;
+  overflow: hidden; border: 1px solid var(--border);
+}
+.ai-chat-panel.open { display: flex; }
+.ai-chat-header {
+  background: linear-gradient(145deg, #0a2e36, var(--primary));
+  color: white; padding: 13px 15px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-weight: 700;
+}
+.ai-chat-header button {
+  background: rgba(255,255,255,0.18); border: none; color: white;
+  width: 32px; height: 32px; border-radius: 8px; cursor: pointer; font-size: 1.1rem;
+}
+.ai-chat-body { flex: 1; overflow-y: auto; padding: 14px; background: var(--bg); }
+.ai-chat-disclaimer {
+  padding: 8px 12px; font-size: 0.7rem; color: var(--text-muted);
+  background: var(--bg-card); border-top: 1px solid var(--border); text-align: center;
+}
+
+/* PDF Modal */
+.pdf-modal {
+  display: none; position: fixed; inset: 0;
+  background: rgba(10,46,54,0.8); z-index: 2000;
+  align-items: center; justify-content: center; padding: 12px;
+  backdrop-filter: blur(6px);
+}
+.pdf-modal.open { display: flex; }
+.pdf-modal-inner {
+  background: var(--bg-card); width: 100%; max-width: 980px;
+  height: 92vh; border-radius: 14px; overflow: hidden;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+}
+.pdf-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 11px 16px; background: #0a2e36; color: white; font-weight: 700;
+}
+.pdf-modal-header button {
+  background: rgba(255,255,255,0.15); border: none; color: white;
+  width: 34px; height: 34px; border-radius: 8px; cursor: pointer; font-size: 1.15rem;
+}
+.pdf-modal-body { flex: 1; background: #e8eef0; }
+.pdf-modal-body iframe { width: 100%; height: 100%; border: none; }
+
+@media (max-width: 768px) {
+  .burger { display: block; }
+  .nav {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--bg-card); flex-direction: column; padding: 12px;
+    box-shadow: var(--shadow); border-top: 1px solid var(--border);
+  }
+  .nav.open { display: flex; }
+  .nav a { padding: 12px 14px; border-radius: 10px; }
+  .hero h1 { font-size: 1.85rem; }
+  .about-content { grid-template-columns: 1fr; }
+  .about-photo { max-width: 180px; margin: 0 auto; }
+  .ai-chat-panel { right: 10px; left: 10px; width: auto; bottom: 88px; }
+  .ai-chat-btn { right: 14px; bottom: 14px; }
+  .book-frame { height: 55vh; }
+}
+
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.game-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+  cursor: pointer;
+  transition: 0.2s;
+  text-align: center;
+}
+.game-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+.game-card .icon { font-size: 2.2rem; margin-bottom: 8px; }
+.game-card h3 { color: var(--primary); font-size: 1.05rem; margin-bottom: 6px; }
+.game-card p { color: var(--text-muted); font-size: 0.85rem; }
+.game-area { display: none; }
+.game-area.open { display: block; }
+.game-top {
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  margin-bottom: 16px;
+}
+.hud {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  font-weight: 700; color: var(--text); margin-bottom: 14px;
+}
+.hud span { background: var(--bg-card); border: 1px solid var(--border);
+  padding: 6px 12px; border-radius: 8px; font-size: 0.9rem; }
+.q-box {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px; margin-bottom: 14px;
+}
+.opt-btn {
+  display: block; width: 100%; text-align: left; padding: 12px 14px;
+  margin: 8px 0; border-radius: 10px; border: 1.5px solid var(--border);
+  background: var(--bg); color: var(--text); cursor: pointer; font-size: 0.95rem;
+}
+.opt-btn:hover { border-color: var(--primary); }
+.opt-btn.ok { border-color: #16a34a; background: rgba(22,163,74,0.12); }
+.opt-btn.bad { border-color: #e11d48; background: rgba(225,29,72,0.1); }
+.mem-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+}
+@media(max-width:500px){ .mem-grid { grid-template-columns: repeat(3, 1fr); } }
+.mem-card {
+  aspect-ratio: 1; border-radius: 12px; border: 1.5px solid var(--border);
+  background: var(--bg-card); display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; cursor: pointer; user-select: none; transition: 0.15s;
+}
+.mem-card.flipped, .mem-card.matched {
+  background: color-mix(in srgb, var(--primary) 15%, var(--bg-card));
+  border-color: var(--primary);
+}
+.mem-card.matched { opacity: 0.7; }
+.drag-zone {
+  min-height: 54px; border: 2px dashed var(--border); border-radius: 10px;
+  padding: 8px; margin: 8px 0; background: var(--bg);
+}
+.chip {
+  display: inline-block; padding: 8px 12px; margin: 4px;
+  background: var(--bg-card); border: 1.5px solid var(--border);
+  border-radius: 999px; cursor: grab; font-size: 0.88rem; font-weight: 600;
+}
+.chip.used { opacity: 0.35; pointer-events: none; }
+.result-box {
+  text-align: center; padding: 24px; background: var(--bg-card);
+  border-radius: 14px; border: 1px solid var(--border);
+}
+.result-box .big { font-size: 2.4rem; font-weight: 800; color: var(--primary); }
+
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo"><div class="logo-icon">⚕</div><span>Shahrom Rajabov</span></a>
+      <button class="burger" id="burger">☰</button>
+      <nav class="nav" id="nav">
+        <a href="index.html">О себе</a>
+        <a href="materials.html">Материалы</a>
+        <a href="clinical.html">Клиника</a>
+        <a href="exam.html">Экзамен</a>
+        <a href="tests.html">Тесты</a>
+        <a href="games.html" class="active">Игры</a>
+        <a href="schedule.html">Расписание</a>
+        <a href="books.html">Книги</a>
+        <a href="contact.html">Связь</a>
+      </nav>
+      <div class="header-actions">
+        <button class="lang-btn active" data-lang="ru">RU</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="icon-btn" id="themeBtn">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Медицинские игры</h2>
+      <div class="note">Учись играя: викторины, память, термины, первая помощь. Выберите игру.</div>
+
+      <div class="games-grid" id="gamesList">
+        <div class="game-card" data-game="anatomy"><div class="icon">🦴</div><h3>Анатомия</h3><p>10 вопросов об органах и системах</p></div>
+        <div class="game-card" data-game="symptoms"><div class="icon">🩺</div><h3>Симптом → диагноз</h3><p>Угадай заболевание по клинике</p></div>
+        <div class="game-card" data-game="speed"><div class="icon">⚡</div><h3>Блиц 60 сек</h3><p>Как много ответишь за минуту?</p></div>
+        <div class="game-card" data-game="terms"><div class="icon">📖</div><h3>Термины</h3><p>Соедини термин и определение</p></div>
+        <div class="game-card" data-game="memory"><div class="icon">🧠</div><h3>Мемо</h3><p>Найди пары медицинских символов</p></div>
+        <div class="game-card" data-game="systems"><div class="icon">🧩</div><h3>Системы органов</h3><p>Разложи органы по системам</p></div>
+        <div class="game-card" data-game="firstaid"><div class="icon">🚑</div><h3>Первая помощь</h3><p>Что делать в экстренной ситуации</p></div>
+        <div class="game-card" data-game="truefalse"><div class="icon">✅</div><h3>Правда / Ложь</h3><p>Верно ли медицинское утверждение?</p></div>
+      </div>
+
+      <div id="gameArea" class="game-area"></div>
+    </div>
+  </section>
+
+  <footer class="footer"><div class="container"><p>© 2025–2026 Shahrom Rajabov</p></div></footer>
+  <script>// Theme + Language + AI + PDF
+const i18n = {
+  ru: {
+    about: "О себе", materials: "Материалы", books: "Книги", contact: "Обратная связь",
+    heroTitle: "Раджабов Шахром", heroSub: "Студент • Будущий врач",
+    heroTag: "Путь в медицину начинается с знаний, дисциплины и желания помогать людям",
+    aboutTitle: "О себе",
+    aboutP1: "Здравствуйте! Меня зовут Раджабов Шахром. Я студент медицинского университета, который стремится стать квалифицированным и внимательным врачом.",
+    aboutP2: "Медицина для меня — это не просто профессия, а призвание. Я верю, что хороший врач должен сочетать глубокие знания, эмпатию и постоянное стремление к развитию.",
+    status: "Статус", statusVal: "Студент медицинского вуза",
+    goal: "Цель", goalVal: "Стать практикующим врачом",
+    interests: "Интересы", interestsVal: "Клиническая медицина, анатомия, терапия",
+    matTitle: "Материалы для экзамена",
+    matHero: "Детская хирургия — вопросы 1–182",
+    matDesc: "Основной учебный материал. Читайте учебник прямо на сайте и ищите ответы по вопросам.",
+    openBook: "Открыть учебник",
+    searchPh: "Поиск по вопросам (атрезия, травма, пилоростеноз...)",
+    totalQ: "Всего вопросов",
+    booksTitle: "Рекомендуемые книги",
+    contactTitle: "Обратная связь",
+    send: "Отправить",
+    aiTitle: "ИИ-помощник",
+    aiLocal: "Поиск по материалам сайта",
+    aiWeb: "Спросить общий медицинский ИИ",
+    aiHint: "Введите тему или вопрос — найду в материалах. Для других медицинских вопросов откройте ChatGPT / Perplexity."
+  },
+  en: {
+    about: "About", materials: "Materials", books: "Books", contact: "Contact",
+    heroTitle: "Shahrom Rajabov", heroSub: "Student • Future Doctor",
+    heroTag: "The path to medicine begins with knowledge, discipline and the desire to help people",
+    aboutTitle: "About me",
+    aboutP1: "Hello! My name is Shahrom Rajabov. I am a medical university student who strives to become a qualified and attentive doctor.",
+    aboutP2: "Medicine for me is not just a profession, but a calling. I believe a good doctor must combine deep knowledge, empathy and continuous development.",
+    status: "Status", statusVal: "Medical university student",
+    goal: "Goal", goalVal: "Become a practicing physician",
+    interests: "Interests", interestsVal: "Clinical medicine, anatomy, therapy",
+    matTitle: "Exam materials",
+    matHero: "Pediatric Surgery — questions 1–182",
+    matDesc: "Main study material. Read the textbook on the site and search answers by question.",
+    openBook: "Open textbook",
+    searchPh: "Search questions (atresia, trauma, pyloric stenosis...)",
+    totalQ: "Total questions",
+    booksTitle: "Recommended books",
+    contactTitle: "Feedback",
+    send: "Send",
+    aiTitle: "AI Assistant",
+    aiLocal: "Search site materials",
+    aiWeb: "Ask general medical AI",
+    aiHint: "Enter a topic — I will search the materials. For other medical questions open ChatGPT / Perplexity."
+  }
+};
+
+let currentLang = localStorage.getItem('lang') || 'ru';
+let currentTheme = localStorage.getItem('theme') || 'light';
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  applyLang(currentLang);
+  initBurger();
+  initThemeBtn();
+  initLangBtn();
+  initAIChat();
+  initPdfButtons();
+});
+
+function applyLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (i18n[lang][key]) el.textContent = i18n[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (i18n[lang][key]) el.placeholder = i18n[lang][key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+}
+
+function initThemeBtn() {
+  const btn = document.getElementById('themeBtn');
+  if (!btn) return;
+  btn.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+  btn.addEventListener('click', () => {
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', currentTheme);
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    btn.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+  });
+}
+
+function initLangBtn() {
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+  });
+}
+
+function initBurger() {
+  const burger = document.getElementById('burger');
+  const nav = document.getElementById('nav');
+  if (!burger || !nav) return;
+  burger.addEventListener('click', () => {
+    nav.classList.toggle('open');
+    burger.textContent = nav.classList.contains('open') ? '✕' : '☰';
+  });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    nav.classList.remove('open'); burger.textContent = '☰';
+  }));
+}
+
+function initPdfButtons() {
+  document.querySelectorAll('[data-open-pdf]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      openPdfViewer(btn.getAttribute('data-open-pdf'));
+    });
+  });
+}
+
+function openPdfViewer(url) {
+  let modal = document.getElementById('pdfModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'pdfModal';
+    modal.className = 'pdf-modal';
+    modal.innerHTML = `
+      <div class="pdf-modal-inner">
+        <div class="pdf-modal-header">
+          <span>Pediatric Surgery / Детская хирургия</span>
+          <button id="pdfModalClose">✕</button>
+        </div>
+        <div class="pdf-modal-body"><iframe id="pdfFrame" src="" title="PDF"></iframe></div>
+      </div>`;
+    document.body.appendChild(modal);
+    document.getElementById('pdfModalClose').onclick = () => {
+      modal.classList.remove('open');
+      document.getElementById('pdfFrame').src = '';
+    };
+    modal.onclick = e => { if (e.target === modal) { modal.classList.remove('open'); document.getElementById('pdfFrame').src = ''; } };
+  }
+  document.getElementById('pdfFrame').src = url + '#toolbar=1';
+  modal.classList.add('open');
+}
+
+function initAIChat() {
+  if (document.getElementById('aiChatBtn')) return;
+  const btn = document.createElement('button');
+  btn.className = 'ai-chat-btn'; btn.id = 'aiChatBtn'; btn.innerHTML = '🤖';
+  document.body.appendChild(btn);
+
+  const panel = document.createElement('div');
+  panel.className = 'ai-chat-panel'; panel.id = 'aiChatPanel';
+  panel.innerHTML = `
+    <div class="ai-chat-header">
+      <span data-i18n="aiTitle">ИИ-помощник</span>
+      <button id="aiChatClose">✕</button>
+    </div>
+    <div class="ai-chat-body">
+      <p style="font-weight:600;margin-bottom:10px;" data-i18n="aiLocal">Поиск по материалам сайта</p>
+      <input id="aiInput" type="text" data-i18n-placeholder="searchPh" placeholder="атрезия, травма..."
+        style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--bg-card);color:var(--text);margin-bottom:10px;font-size:0.95rem;">
+      <button id="aiSearchBtn" class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:14px;">Найти</button>
+      <div id="aiResults" style="font-size:0.9rem;"></div>
+      <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);">
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:10px;" data-i18n="aiWeb">Спросить общий медицинский ИИ</p>
+        <a href="https://chatgpt.com/" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%;justify-content:center;background:#10a37f;margin-bottom:8px;">ChatGPT</a>
+        <a href="https://www.perplexity.ai/" target="_blank" rel="noopener" class="btn" style="width:100%;justify-content:center;background:var(--bg-card);border:1px solid var(--border);color:var(--text);">Perplexity (с источниками)</a>
+      </div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-top:12px;" data-i18n="aiHint"></p>
+    </div>
+    <div class="ai-chat-disclaimer">Не заменяет врача и учебник. Проверяйте важную информацию.</div>
+  `;
+  document.body.appendChild(panel);
+
+  btn.onclick = () => {
+    const open = panel.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    btn.innerHTML = open ? '✕' : '🤖';
+  };
+  document.getElementById('aiChatClose').onclick = () => {
+    panel.classList.remove('open'); btn.classList.remove('open'); btn.innerHTML = '🤖';
+  };
+
+  const doSearch = () => {
+    const q = (document.getElementById('aiInput').value || '').toLowerCase().trim();
+    const results = document.getElementById('aiResults');
+    if (!q) { results.innerHTML = '<p style="color:var(--text-muted)">Введите запрос</p>'; return; }
+    if (typeof fullQuestions === 'undefined') {
+      results.innerHTML = '<p>Откройте страницу «Материалы» для поиска по 182 вопросам.</p>';
+      return;
+    }
+    const found = fullQuestions.filter(i =>
+      i.t.toLowerCase().includes(q) || (i.a && i.a.toLowerCase().includes(q))
+    ).slice(0, 6);
+    if (!found.length) {
+      results.innerHTML = '<p>В материалах не найдено. Попробуйте ChatGPT или Perplexity ниже.</p>';
+      return;
+    }
+    results.innerHTML = found.map(i => `
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:10px;margin-bottom:8px;">
+        <div style="font-weight:700;color:var(--primary);margin-bottom:4px;">№${i.n}. ${i.t}</div>
+        <div style="font-size:0.82rem;color:var(--text-muted);max-height:60px;overflow:hidden;">${(i.a||'').replace(/<[^>]+>/g,'').slice(0,160)}...</div>
+      </div>`).join('');
+  };
+  document.getElementById('aiSearchBtn').onclick = doSearch;
+  document.getElementById('aiInput').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+  applyLang(currentLang);
+}
+</script>
+  <script>
+  const ANATOMY = [{"q": "Какой орган фильтрует кровь и образует мочу?", "opts": ["Почка", "Печень", "Селезёнка", "Поджелудочная"], "a": 0}, {"q": "Где вырабатывается инсулин?", "opts": ["Поджелудочная железа", "Щитовидная железа", "Надпочечники", "Гипофиз"], "a": 0}, {"q": "Самая крупная артерия тела:", "opts": ["Аорта", "Лёгочная артерия", "Сонная артерия", "Бедренная артерия"], "a": 0}, {"q": "Сколько камер у сердца человека?", "opts": ["4", "2", "3", "5"], "a": 0}, {"q": "Какая кость самая длинная?", "opts": ["Бедренная", "Большеберцовая", "Плечевая", "Лучевая"], "a": 0}, {"q": "Где находится червеобразный отросток?", "opts": ["Слепая кишка", "Желудок", "Сигмовидная кишка", "Двенадцатиперстная"], "a": 0}, {"q": "Основная мышца вдоха:", "opts": ["Диафрагма", "Прямая мышца живота", "Трапециевидная", "Дельтовидная"], "a": 0}, {"q": "Какой витамин синтезируется в коже на солнце?", "opts": ["D", "C", "B12", "K"], "a": 0}, {"q": "Эритроциты переносят:", "opts": ["Кислород", "Инсулин", "Жёлчь", "Мочу"], "a": 0}, {"q": "Самая маленькая кость человека:", "opts": ["Стремечко (в ухе)", "Носовая", "Фаланга мизинца", "Надколенник"], "a": 0}];
+  const SYMPTOMS = [{"q": "Рвота «фонтаном» без желчи у младенца 5 недель — думать о:", "opts": ["Пилоростенозе", "Аппендиците", "ОРВИ", "Отите"], "a": 0}, {"q": "Давящая боль за грудиной с иррадиацией в руку:", "opts": ["Стенокардия / ОКС", "Гастрит", "Межрёберная невралгия", "Пневмония"], "a": 0}, {"q": "Боль в правом подреберье после жирной пищи:", "opts": ["Желчнокаменная / холецистит", "Аппендицит", "Пиелонефрит", "Панкреатит только слева"], "a": 0}, {"q": "Миграция боли в правую подвздошную область:", "opts": ["Аппендицит", "Инфаркт", "Мигрень", "Отит"], "a": 0}, {"q": "Свистящее дыхание, приступы одышки, ответ на сальбутамол:", "opts": ["Бронхиальная астма", "Пневмоторакс", "Ангина", "Гастрит"], "a": 0}, {"q": "Пенистая слюна и цианоз при кормлении новорождённого:", "opts": ["Атрезия пищевода", "Физиологическая желтуха", "Потница", "Кривошея"], "a": 0}, {"q": "«Малиновое желе» + приступообразный плач у грудничка:", "opts": ["Инвагинация", "Прорезывание зубов", "ОРВИ", "Опрелости"], "a": 0}, {"q": "Лихорадка, кашель, локальные влажные хрипы:", "opts": ["Пневмония", "Только ринит", "Мигрень", "Остеохондроз"], "a": 0}];
+  const TERMS = [["Тахикардия", "Учащённое сердцебиение"], ["Брадикардия", "Замедленный ритм сердца"], ["Гипоксия", "Недостаток кислорода"], ["Апноэ", "Остановка дыхания"], ["Гематурия", "Кровь в моче"], ["Мелена", "Чёрный дёгтеобразный стул"], ["Цианоз", "Синюшность кожи"], ["Отёк", "Скопление жидкости в тканях"]];
+  const SYSTEMS = {"Сердечно-сосудистая": ["Сердце", "Аорта", "Вены", "Капилляры"], "Дыхательная": ["Лёгкие", "Трахея", "Бронхи", "Альвеолы"], "Пищеварительная": ["Желудок", "Печень", "Кишечник", "Поджелудочная"], "Мочевыделительная": ["Почки", "Мочеточник", "Мочевой пузырь", "Уретра"]};
+  const FIRSTAID = [{"q": "При артериальном кровотечении из конечности первое:", "opts": ["Жгут выше раны + время наложения", "Только вата без давления", "Промыть грязной водой", "Игнорировать"], "a": 0}, {"q": "Человек без сознания, не дышит. Ваши действия:", "opts": ["Вызвать помощь, начать СЛР 30:2", "Дать воды", "Поднять ноги и ждать", "Бить по щекам без оценки дыхания"], "a": 0}, {"q": "Подозрение на перелом конечности:", "opts": ["Иммобилизация, холод, к врачу", "Вправить самим с силой", "Разогреть мазью", "Заставить ходить"], "a": 0}, {"q": "Ожог кипятком I–II ст.:", "opts": ["Охладить водой 10–20 мин, не мазать маслом", "Смазать сметаной", "Проколоть все пузыри", "Насыпать муку"], "a": 0}, {"q": "Приступ астмы, есть ингалятор:", "opts": ["Помочь принять КДБА (сальбутамол), вызвать помощь при тяжёлом приступе", "Уложить на живот без воздуха", "Дать снотворное", "Запретить ингалятор"], "a": 0}];
+  const MEM = ["❤️", "🫁", "🧠", "🦴", "🩸", "💊", "🩺", "🧬"];
+  const TRUEFALSE = [
+    {q: "У человека 4 камеры сердца", t: true},
+    {q: "Печень вырабатывает инсулин", t: false},
+    {q: "Аппендикс связан со слепой кишкой", t: true},
+    {q: "Эритроциты переносят кислород", t: true},
+    {q: "Пилоростеноз чаще в 10–12 лет", t: false},
+    {q: "Аорта — самая крупная артерия", t: true},
+    {q: "При STEMI реперфузия должна быть как можно раньше", t: true},
+    {q: "Антибиотики нужны при любом кашле 2 дня", t: false},
+    {q: "Диафрагма — главная мышца вдоха", t: true},
+    {q: "Мелена — это светлый стул", t: false}
+  ];
+
+  const list = document.getElementById('gamesList');
+  const area = document.getElementById('gameArea');
+
+  list.querySelectorAll('.game-card').forEach(c => {
+    c.onclick = () => startGame(c.dataset.game);
+  });
+
+  function backBtn() {
+    return `<button class="btn" id="btnBackGames" style="border:1.5px solid var(--border);background:var(--bg-card);color:var(--text);padding:8px 14px;border-radius:10px;cursor:pointer;font-weight:600">← К играм</button>`;
+  }
+  function bindBack() {
+    const b = document.getElementById('btnBackGames');
+    if (b) b.onclick = () => { area.classList.remove('open'); area.innerHTML=''; list.style.display='grid'; };
+  }
+
+  function startGame(id) {
+    list.style.display = 'none';
+    area.classList.add('open');
+    if (id === 'anatomy') quizGame('Анатомия', ANATOMY);
+    else if (id === 'symptoms') quizGame('Симптом → диагноз', SYMPTOMS);
+    else if (id === 'speed') speedGame();
+    else if (id === 'terms') termsGame();
+    else if (id === 'memory') memoryGame();
+    else if (id === 'systems') systemsGame();
+    else if (id === 'firstaid') quizGame('Первая помощь', FIRSTAID);
+    else if (id === 'truefalse') trueFalseGame();
+  }
+
+  function shuffle(a) {
+    const x = [...a];
+    for (let i = x.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [x[i], x[j]] = [x[j], x[i]];
+    }
+    return x;
+  }
+
+  // ===== Quiz (anatomy, symptoms, first aid) =====
+  function quizGame(title, bank) {
+    const qs = shuffle(bank);
+    let i = 0, score = 0, locked = false;
+    function render() {
+      if (i >= qs.length) {
+        area.innerHTML = `<div class="result-box">
+          ${backBtn()}
+          <h3 style="margin:16px 0 8px">${title}</h3>
+          <div class="big">${score} / ${qs.length}</div>
+          <p style="color:var(--text-muted)">${Math.round(score/qs.length*100)}%</p>
+          <button class="btn btn-primary" id="again" style="margin-top:12px">Ещё раз</button>
+        </div>`;
+        bindBack();
+        document.getElementById('again').onclick = () => quizGame(title, bank);
+        return;
+      }
+      const q = qs[i];
+      locked = false;
+      area.innerHTML = `
+        <div class="game-top">${backBtn()}<strong>${title}</strong></div>
+        <div class="hud"><span>Вопрос ${i+1} / ${qs.length}</span><span>Очки: ${score}</span></div>
+        <div class="q-box"><p style="font-weight:600;margin-bottom:8px">${q.q}</p>
+          ${q.opts.map((o, j) => `<button class="opt-btn" data-j="${j}">${o}</button>`).join('')}
+        </div>`;
+      bindBack();
+      area.querySelectorAll('.opt-btn').forEach(btn => {
+        btn.onclick = () => {
+          if (locked) return;
+          locked = true;
+          const j = +btn.dataset.j;
+          area.querySelectorAll('.opt-btn').forEach(b => {
+            if (+b.dataset.j === q.a) b.classList.add('ok');
+            if (+b.dataset.j === j && j !== q.a) b.classList.add('bad');
+          });
+          if (j === q.a) score++;
+          setTimeout(() => { i++; render(); }, 700);
+        };
+      });
+    }
+    render();
+  }
+
+  // ===== Speed 60s =====
+  function speedGame() {
+    const bank = shuffle([...ANATOMY, ...SYMPTOMS, ...FIRSTAID]);
+    let i = 0, score = 0, left = 60, locked = false, timer;
+    function tick() {
+      left--;
+      const t = document.getElementById('timeLeft');
+      if (t) t.textContent = '⏱ ' + left;
+      if (left <= 0) end();
+    }
+    function end() {
+      clearInterval(timer);
+      area.innerHTML = `<div class="result-box">
+        ${backBtn()}
+        <h3 style="margin:16px 0 8px">Блиц 60 сек</h3>
+        <div class="big">${score}</div>
+        <p style="color:var(--text-muted)">правильных ответов</p>
+        <button class="btn btn-primary" id="again" style="margin-top:12px">Ещё раз</button>
+      </div>`;
+      bindBack();
+      document.getElementById('again').onclick = speedGame;
+    }
+    function render() {
+      if (left <= 0) return;
+      const q = bank[i % bank.length];
+      locked = false;
+      area.innerHTML = `
+        <div class="game-top">${backBtn()}<strong>Блиц</strong></div>
+        <div class="hud"><span id="timeLeft">⏱ ${left}</span><span>Очки: ${score}</span></div>
+        <div class="q-box"><p style="font-weight:600">${q.q}</p>
+          ${q.opts.map((o, j) => `<button class="opt-btn" data-j="${j}">${o}</button>`).join('')}
+        </div>`;
+      bindBack();
+      area.querySelectorAll('.opt-btn').forEach(btn => {
+        btn.onclick = () => {
+          if (locked || left <= 0) return;
+          locked = true;
+          if (+btn.dataset.j === q.a) score++;
+          i++;
+          render();
+        };
+      });
+    }
+    render();
+    timer = setInterval(tick, 1000);
+  }
+
+  // ===== Terms match =====
+  function termsGame() {
+    const pairs = shuffle(TERMS);
+    let leftDefs = shuffle(pairs.map(p => p[1]));
+    let score = 0, done = 0;
+    let selectedTerm = null;
+
+    function render() {
+      if (done >= pairs.length) {
+        area.innerHTML = `<div class="result-box">${backBtn()}<h3 style="margin:16px 0">Термины</h3>
+          <div class="big">${score} / ${pairs.length}</div>
+          <button class="btn btn-primary" id="again" style="margin-top:12px">Ещё раз</button></div>`;
+        bindBack();
+        document.getElementById('again').onclick = termsGame;
+        return;
+      }
+      area.innerHTML = `
+        <div class="game-top">${backBtn()}<strong>Термины</strong></div>
+        <div class="hud"><span>Совпадений: ${score}</span></div>
+        <p style="color:var(--text-muted);margin-bottom:10px">Сначала нажмите термин, затем определение</p>
+        <div class="q-box">
+          <div style="margin-bottom:12px"><b>Термины:</b><br>
+            ${pairs.map((p,i) => `<span class="chip term" data-i="${i}">${p[0]}</span>`).join('')}
+          </div>
+          <div><b>Определения:</b><br>
+            ${leftDefs.map((d,i) => `<span class="chip def" data-d="${d.replace(/"/g,'&quot;')}">${d}</span>`).join('')}
+          </div>
+          <div id="termMsg" style="margin-top:10px;font-weight:600"></div>
+        </div>`;
+      bindBack();
+      let sel = null;
+      area.querySelectorAll('.chip.term').forEach(ch => {
+        ch.onclick = () => {
+          area.querySelectorAll('.chip.term').forEach(c => c.style.outline='');
+          ch.style.outline = '2px solid var(--primary)';
+          sel = +ch.dataset.i;
+        };
+      });
+      area.querySelectorAll('.chip.def').forEach(ch => {
+        ch.onclick = () => {
+          if (sel === null) return;
+          const ok = pairs[sel][1] === ch.textContent;
+          const msg = document.getElementById('termMsg');
+          if (ok) { score++; msg.style.color='#16a34a'; msg.textContent='✓ Верно!'; }
+          else { msg.style.color='#e11d48'; msg.textContent='✗ Неверно'; }
+          done++;
+          // remove used
+          pairs.splice(sel, 1);
+          leftDefs = leftDefs.filter(d => d !== ch.textContent);
+          setTimeout(render, 500);
+        };
+      });
+    }
+    render();
+  }
+
+  // ===== Memory =====
+  function memoryGame() {
+    let cards = shuffle([...MEM, ...MEM]).map((v, i) => ({ id: i, v, flipped: false, matched: false }));
+    let open = [];
+    let moves = 0;
+    let lock = false;
+
+    function render() {
+      const allMatched = cards.every(c => c.matched);
+      if (allMatched) {
+        area.innerHTML = `<div class="result-box">${backBtn()}<h3 style="margin:16px 0">Мемо</h3>
+          <div class="big">${moves}</div><p style="color:var(--text-muted)">ходов</p>
+          <button class="btn btn-primary" id="again" style="margin-top:12px">Ещё раз</button></div>`;
+        bindBack();
+        document.getElementById('again').onclick = memoryGame;
+        return;
+      }
+      area.innerHTML = `
+        <div class="game-top">${backBtn()}<strong>Мемо</strong></div>
+        <div class="hud"><span>Ходы: ${moves}</span></div>
+        <div class="mem-grid">
+          ${cards.map((c,i) => `
+            <div class="mem-card ${c.flipped||c.matched?'flipped':''} ${c.matched?'matched':''}" data-i="${i}">
+              ${c.flipped||c.matched ? c.v : '❓'}
+            </div>`).join('')}
+        </div>`;
+      bindBack();
+      area.querySelectorAll('.mem-card').forEach(el => {
+        el.onclick = () => {
+          if (lock) return;
+          const i = +el.dataset.i;
+          const c = cards[i];
+          if (c.flipped || c.matched) return;
+          c.flipped = true;
+          open.push(i);
+          if (open.length === 2) {
+            moves++;
+            lock = true;
+            const [a,b] = open;
+            if (cards[a].v === cards[b].v) {
+              cards[a].matched = cards[b].matched = true;
+              open = [];
+              lock = false;
+              render();
+            } else {
+              render();
+              setTimeout(() => {
+                cards[a].flipped = cards[b].flipped = false;
+                open = [];
+                lock = false;
+                render();
+              }, 600);
+              return;
+            }
+          } else render();
+        };
+      });
+    }
+    render();
+  }
+
+  // ===== Systems sort =====
+  function systemsGame() {
+    const entries = Object.entries(SYSTEMS);
+    let idx = 0, score = 0;
+
+    function render() {
+      if (idx >= entries.length) {
+        area.innerHTML = `<div class="result-box">${backBtn()}<h3 style="margin:16px 0">Системы</h3>
+          <div class="big">${score} / ${entries.length}</div>
+          <button class="btn btn-primary" id="again" style="margin-top:12px">Ещё раз</button></div>`;
+        bindBack();
+        document.getElementById('again').onclick = systemsGame;
+        return;
+      }
+      const [sys, organs] = entries[idx];
+      const allOrgans = shuffle(entries.flatMap(([,o]) => o));
+      const pool = shuffle([...organs, ...allOrgans.filter(o => !organs.includes(o)).slice(0, 4)]);
+      let selected = new Set();
+
+      area.innerHTML = `
+        <div class="game-top">${backBtn()}<strong>Системы органов</strong></div>
+        <div class="hud"><span>${idx+1} / ${entries.length}</span><span>Очки: ${score}</span></div>
+        <div class="q-box">
+          <p style="font-weight:700;margin-bottom:10px">Что относится к системе: «${sys}»?</p>
+          <p style="font-size:0.85rem;color:var(--text-muted)">Выберите все подходящие, затем «Проверить»</p>
+          <div id="orgPool">${pool.map(o => `<span class="chip org" data-o="${o}">${o}</span>`).join('')}</div>
+          <button class="btn btn-primary" id="checkSys" style="margin-top:14px">Проверить</button>
+          <div id="sysMsg" style="margin-top:10px;font-weight:600"></div>
+        </div>`;
+      bindBack();
+      area.querySelectorAll('.chip.org').forEach(ch => {
+        ch.onclick = () => {
+          const o = ch.dataset.o;
+          if (selected.has(o)) { selected.delete(o); ch.style.outline=''; }
+          else { selected.add(o); ch.style.outline='2px solid var(--primary)'; }
+        };
+      });
+      document.getElementById('checkSys').onclick = () => {
+        const correct = new Set(organs);
+        let ok = selected.size === correct.size && [...selected].every(x => correct.has(x));
+        const msg = document.getElementById('sysMsg');
+        if (ok) { score++; msg.style.color='#16a34a'; msg.textContent='✓ Верно!'; }
+        else { msg.style.color='#e11d48'; msg.textContent='✗ Нужно: ' + organs.join(', '); }
+        setTimeout(() => { idx++; render(); }, 900);
+      };
+    }
+    render();
+  }
+
+  // ===== True / False =====
+  function trueFalseGame() {
+    const qs = shuffle(TRUEFALSE);
+    let i = 0, score = 0;
+    function render() {
+      if (i >= qs.length) {
+        area.innerHTML = `<div class="result-box">${backBtn()}<h3 style="margin:16px 0">Правда / Ложь</h3>
+          <div class="big">${score} / ${qs.length}</div>
+          <button class="btn btn-primary" id="again" style="margin-top:12px">Ещё раз</button></div>`;
+        bindBack();
+        document.getElementById('again').onclick = trueFalseGame;
+        return;
+      }
+      const q = qs[i];
+      area.innerHTML = `
+        <div class="game-top">${backBtn()}<strong>Правда / Ложь</strong></div>
+        <div class="hud"><span>${i+1} / ${qs.length}</span><span>Очки: ${score}</span></div>
+        <div class="q-box">
+          <p style="font-weight:600;font-size:1.05rem;margin-bottom:16px">${q.q}</p>
+          <button class="opt-btn" id="btnTrue">✓ Правда</button>
+          <button class="opt-btn" id="btnFalse">✗ Ложь</button>
+        </div>`;
+      bindBack();
+      const answer = (val) => {
+        if (val === q.t) score++;
+        i++;
+        render();
+      };
+      document.getElementById('btnTrue').onclick = () => answer(true);
+      document.getElementById('btnFalse').onclick = () => answer(false);
+    }
+    render();
+  }
+  </script>
+</body>
+</html>
